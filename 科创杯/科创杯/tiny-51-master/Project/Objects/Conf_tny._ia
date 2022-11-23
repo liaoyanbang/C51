@@ -1,0 +1,1 @@
+"..\TINY\Conf_tny.A51" SET (SMALL) DEBUG PRINT(.\Listings\Conf_tny.lst) OBJECT(.\Objects\Conf_tny.obj) EP

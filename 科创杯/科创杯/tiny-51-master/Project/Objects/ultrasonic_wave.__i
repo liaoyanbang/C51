@@ -1,0 +1,1 @@
+"..\HARDWARE\CHAO\ultrasonic_wave.c" OMF2 OPTIMIZE (9,SPEED) BROWSE INCDIR(..\HARDWARE\OLED;..\Project;..\TINY;..\HARDWARE\CHAO;..\HARDWARE\DS18B20) DEBUG PRINT(.\Listings\ultrasonic_wave.lst) TABS (2) OBJECT(.\Objects\ultrasonic_wave.obj)

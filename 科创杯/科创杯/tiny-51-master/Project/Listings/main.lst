@@ -1,0 +1,379 @@
+C51 COMPILER V9.60.0.0   MAIN                                                              05/18/2022 17:31:23 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: D:\Keil_v5\44444444444\C51\BIN\C51.EXE main.c OMF2 OPTIMIZE(9,SPEED) BROWSE INCDIR(..\HARDWARE\OLED
+                    -;..\Project;..\TINY;..\HARDWARE\CHAO;..\HARDWARE\DS18B20) DEBUG PRINT(.\Listings\main.lst) TABS(2) OBJECT(.\Objects\main
+                    -.obj)
+
+line level    source
+
+   1          #include "main.h"
+   2          
+   3          /*******************************************************************************
+   4          * 端口定义区域     : 
+   5          *******************************************************************************/
+   6          sbit LED = P1^0;
+   7          sbit LED1 = P0^1;
+   8          sbit LED2 = P0^2;
+   9          sbit LED3 = P0^3;
+  10          sbit LED4 = P0^4;
+  11          sbit LED5 = P0^5;
+  12          sbit LED6 = P0^6;
+  13          sbit LED7 = P0^7;
+  14          
+  15          /*******************************************************************************
+  16          * 外部变量调用区域 : 
+  17          *******************************************************************************/
+  18          //定时器溢出标志
+  19          uchar flags1=0;
+  20          uchar flags2=0;
+  21          uchar flags3=0;
+  22          uchar flags4=0;
+  23          uchar flags5=0;
+  24          uchar flags6=0;
+  25          uchar flags7=0;
+  26          //计算定时间
+  27          xdata ULint time1=0;
+  28          //计算定时间
+  29          xdata ULint time2=0;
+  30          //计算定时间
+  31          xdata ULint time3=0;
+  32          //计算定时间
+  33          xdata ULint time4=0;
+  34          //计算定时间
+  35          xdata ULint time5=0;
+  36          //计算定时间
+  37          xdata ULint time6=0;
+  38          //计算定时间
+  39          xdata ULint time7=0;
+  40          //计算距离1
+  41          xdata float L_1=0;
+  42          //计算距离2
+  43          xdata float L_2=0;
+  44          //计算距离3
+  45          xdata float L_3=0;
+  46          //计算距离4
+  47          xdata float L_4=0;
+  48          //计算距离5
+  49          xdata float L_5=0;
+  50          //计算距离6
+  51          xdata float L_6=0;
+  52          //计算距离7
+  53          xdata float L_7=0;
+C51 COMPILER V9.60.0.0   MAIN                                                              05/18/2022 17:31:23 PAGE 2   
+
+  54          
+  55          
+  56          
+  57          //温度
+  58          float t_=0;
+  59          
+  60          #define TH_ (65536-30000)/256
+  61          #define TL_ (65536-30000)%256
+  62          /*******************************************************************************
+  63          * 全局变量调用区域 : 
+  64          *******************************************************************************/
+  65          static unsigned char key;
+  66          
+  67          /*******************************************************************************
+  68          * 自定义函数区域 : 
+  69          *******************************************************************************/
+  70          void delay_ms(unsigned char ms)
+  71          {     
+  72   1        os_wait2(K_TMO,ms);
+  73   1      }
+  74          
+  75          /*******************************************************************************
+  76          * 函 数 名         : MainTask
+  77          * 函数功能           : 启动任务
+  78          * 输    入         : 无
+  79          * 输    出         : 无
+  80          *******************************************************************************/
+  81          void MainTask(void) _task_ 0                            //启动任务
+  82          {
+  83   1        Init_ultrasonic_wave();
+  84   1        Init_DS18B20();
+  85   1        OLED_Init();                                          //初始化OLED  
+  86   1        OLED_Clear();                                         //清除屏幕
+  87   1        LED = 0;
+  88   1        P0 = 0X00;
+  89   1        TMOD=0x10;       // TMOD=0x10;// 使用定时器 T1 的模式 2 自动重装载初值  不需要再赋值       
+  90   1        TL1=TL_;
+  91   1        TH1=TH_;
+  92   1        ET1=1;           //允许T1中断
+  93   1        EA=1;     
+  94   1        //开启总中断
+  95   1        OLED_Clear(); 
+  96   1        OLED_ShowString(0,0,"Dis:",12);
+  97   1        OLED_ShowString(75,0,"Temp:",12);
+  98   1        os_create_task (1);                                   //创建任务
+  99   1        os_create_task (2);  
+ 100   1      
+ 101   1        
+ 102   1        os_delete_task (0);                                   //删除任务0
+ 103   1        while(1);
+ 104   1      }
+ 105           
+ 106          /*******************************************************************************
+ 107          * 函 数 名         : TimeTask
+ 108          * 函数功能         : 检测时间任务
+ 109          * 输    入         : 无
+ 110          * 输    出         : 无
+ 111          *******************************************************************************/
+ 112          void TimeTask(void)  _task_ 1  //任务1
+ 113          {
+ 114   1        while(1) 
+ 115   1        { 
+C51 COMPILER V9.60.0.0   MAIN                                                              05/18/2022 17:31:23 PAGE 3   
+
+ 116   2          StartModule1();//启动超声波
+ 117   2      
+ 118   2          while(!RX1);    //当RX为零时等待
+ 119   2          TR1=1;      //开启计数
+ 120   2          while(RX1);   //当RX为1计数并等待
+ 121   2          TR1=0;      //关闭计数
+ 122   2          time1 = TH1*256+TL1-TH_*256-TL_;
+ 123   2          TL1=TL_;
+ 124   2          TH1=TH_;
+ 125   2      
+ 126   2          
+ 127   2          StartModule2();//启动超声波
+ 128   2          while(!RX2);    //当RX为零时等待
+ 129   2          TR1=1;      //开启计数
+ 130   2          while(RX2);   //当RX为1计数并等待
+ 131   2          TR1=0;      //关闭计数
+ 132   2          time2 = TH1*256+TL1-TH_*256-TL_;
+ 133   2          TL1=TL_;
+ 134   2          TH1=TH_;
+ 135   2      
+ 136   2      
+ 137   2          StartModule3();//启动超声波
+ 138   2          while(!RX3);    //当RX为零时等待
+ 139   2          TR1=1;      //开启计数
+ 140   2          while(RX3);   //当RX为1计数并等待
+ 141   2          TR1=0;      //关闭计数
+ 142   2          //delay_ms(10);
+ 143   2          time3 = TH1*256+TL1-TH_*256-TL_;
+ 144   2          TL1=TL_;
+ 145   2          TH1=TH_;
+ 146   2      
+ 147   2      
+ 148   2          StartModule4();//启动超声波
+ 149   2          while(!RX4);    //当RX为零时等待
+ 150   2          TR1=1;      //开启计数
+ 151   2          while(RX4);   //当RX为1计数并等待
+ 152   2          TR1=0;      //关闭计数
+ 153   2          //delay_ms(10);
+ 154   2          time4 = TH1*256+TL1-TH_*256-TL_;
+ 155   2          TL1=TL_;
+ 156   2          TH1=TH_;
+ 157   2          
+ 158   2          StartModule5();//启动超声波
+ 159   2          while(!RX5);    //当RX为零时等待
+ 160   2          TR1=1;      //开启计数
+ 161   2          while(RX5);   //当RX为1计数并等待
+ 162   2          TR1=0;      //关闭计数
+ 163   2          //delay_ms(10);
+ 164   2          time5 = TH1*256+TL1-TH_*256-TL_;
+ 165   2          TL1=TL_;
+ 166   2          TH1=TH_;
+ 167   2          
+ 168   2          StartModule6();//启动超声波
+ 169   2          while(!RX6);    //当RX为零时等待
+ 170   2          TR1=1;      //开启计数
+ 171   2          while(RX6);   //当RX为1计数并等待
+ 172   2          TR1=0;      //关闭计数
+ 173   2          //delay_ms(10);
+ 174   2          time6 = TH1*256+TL1-TH_*256-TL_;
+ 175   2          TL1=TL_;
+ 176   2          TH1=TH_;
+ 177   2          
+C51 COMPILER V9.60.0.0   MAIN                                                              05/18/2022 17:31:23 PAGE 4   
+
+ 178   2          StartModule7();//启动超声波
+ 179   2          while(!RX7);    //当RX为零时等待
+ 180   2          TR1=1;      //开启计数
+ 181   2          while(RX7);   //当RX为1计数并等待
+ 182   2          TR1=0;      //关闭计数
+ 183   2          //delay_ms(10);
+ 184   2          time7 = TH1*256+TL1-TH_*256-TL_;
+ 185   2          TL1=TL_;
+ 186   2          TH1=TH_;
+ 187   2        }
+ 188   1      }
+ 189          /*******************************************************************************
+ 190          * 函 数 名         : OLEDTask
+ 191          * 函数功能         : 检测时间任务
+ 192          * 输    入         : 无
+ 193          * 输    出         : 无
+ 194          *******************************************************************************/
+ 195          void OLEDTask(void)  _task_ 2  //任务1
+ 196          {
+ 197   1        static xdata uint temp = 0;
+ 198   1        char str[8];
+ 199   1        char temp_[6];
+ 200   1        while(1) 
+ 201   1        { 
+ 202   2          //Init_DS18B20();
+ 203   2          if((temp=ReadTemperature())<=350)
+ 204   2          {
+ 205   3            t_ = temp /10.0;
+ 206   3            sprintf(temp_,"%-4.1fC",t_);
+ 207   3            OLED_ShowString(77,1,temp_,12);
+ 208   3          }     
+ 209   2          if(flags1==1)
+ 210   2          {
+ 211   3            flags1 = 0;
+ 212   3          }
+ 213   2          else 
+ 214   2          {
+ 215   3            L_1=time1 *(331.5+t_*0.045)*50/1000000;
+ 216   3            sprintf(str,"1:%-5.1fcm",L_1);
+ 217   3            OLED_ShowString(1,1,str,12);
+ 218   3            if(L_1<3.0) LED1 = 1;
+ 219   3            else LED1 = 0;
+ 220   3          }
+ 221   2          if(flags2==1)
+ 222   2          {
+ 223   3            flags2 = 0;
+ 224   3          }
+ 225   2          else 
+ 226   2          {
+ 227   3            L_2=time2 *(331.5+t_*0.045)*50/1000000;
+ 228   3            sprintf(str,"2:%-5.1fcm",L_2);
+ 229   3            OLED_ShowString(1,2,str,12);
+ 230   3            if(L_2<3.0) LED2 = 1;
+ 231   3            else LED2 = 0;
+ 232   3          }
+ 233   2          if(flags3==1)
+ 234   2          {
+ 235   3            flags3 = 0;
+ 236   3          }
+ 237   2          else 
+ 238   2          {
+ 239   3            L_3=time3 *(331.5+t_*0.045)*50/1000000;
+C51 COMPILER V9.60.0.0   MAIN                                                              05/18/2022 17:31:23 PAGE 5   
+
+ 240   3            sprintf(str,"3:%-5.1fcm",L_3);
+ 241   3            OLED_ShowString(1,3,str,12);
+ 242   3            if(L_3<3.0) LED3 = 1;
+ 243   3            else LED3 = 0;
+ 244   3          }
+ 245   2          if(flags4==1)
+ 246   2          {
+ 247   3            flags4 = 0;
+ 248   3          }
+ 249   2          else 
+ 250   2          {
+ 251   3            L_4=time4 *(331.5+t_*0.045)*50/1000000;
+ 252   3            sprintf(str,"4:%-5.1fcm",L_4);
+ 253   3            OLED_ShowString(1,4,str,12);
+ 254   3            if(L_4<3.0) LED4 = 1;
+ 255   3            else LED4 = 0;
+ 256   3          }
+ 257   2          if(flags5==1)
+ 258   2          {
+ 259   3            flags5 = 0;
+ 260   3          }
+ 261   2          else 
+ 262   2          {
+ 263   3            L_5=time5 *(331.5+t_*0.045)*50/1000000;
+ 264   3            sprintf(str,"5:%-5.1fcm",L_5);
+ 265   3            OLED_ShowString(1,5,str,12);
+ 266   3            if(L_5<3.0) LED5 = 1;
+ 267   3            else LED5 = 0;
+ 268   3          }
+ 269   2          if(flags6==1)
+ 270   2          {
+ 271   3            flags6 = 0;
+ 272   3          }
+ 273   2          else 
+ 274   2          {
+ 275   3            L_6=time6 *(331.5+t_*0.045)*50/1000000;
+ 276   3            sprintf(str,"6:%-5.1fcm",L_6);
+ 277   3            OLED_ShowString(1,6,str,12);
+ 278   3            if(L_6<3.0) LED6 = 1;
+ 279   3            else LED6 = 0;
+ 280   3          }
+ 281   2          if(flags7==1)
+ 282   2          {
+ 283   3            flags7 = 0;
+ 284   3          }
+ 285   2          else 
+ 286   2          {
+ 287   3            L_7=time7 *(331.5+t_*0.045)*50/1000000;
+ 288   3            sprintf(str,"7:%-5.1fcm",L_7);
+ 289   3            OLED_ShowString(1,7,str,12);
+ 290   3            if(L_7<3.0) LED7 = 1;
+ 291   3            else LED7 = 0;
+ 292   3          }
+ 293   2        }
+ 294   1      }
+ 295          
+ 296           //T0中断用来计数器溢出,超过测距范围
+ 297          void CJ_T1() interrupt 3
+ 298          {
+ 299   1          if(RX1==1)
+ 300   1          {
+ 301   2            flags1=1;
+C51 COMPILER V9.60.0.0   MAIN                                                              05/18/2022 17:31:23 PAGE 6   
+
+ 302   2            RX1=0;
+ 303   2          }
+ 304   1          else  if(RX2==1)
+ 305   1          {
+ 306   2            flags2=1;
+ 307   2            RX2=0;
+ 308   2          }
+ 309   1          else  if(RX3==1)
+ 310   1          {
+ 311   2            flags3=1;
+ 312   2            RX3=0;
+ 313   2          }
+ 314   1          else  if(RX4==1)
+ 315   1          {
+ 316   2            flags4=1;
+ 317   2            RX4=0;
+ 318   2          }
+ 319   1          else if(RX5==1)
+ 320   1          {
+ 321   2            flags5 = 1;
+ 322   2            RX5 = 0;
+ 323   2          }
+ 324   1          else if(RX6==1)
+ 325   1          {
+ 326   2            flags6 = 1;
+ 327   2            RX6 = 0;
+ 328   2          }
+ 329   1          else if(RX7==1)
+ 330   1          {
+ 331   2            flags7 = 1;
+ 332   2            RX7 = 0;
+ 333   2          }
+ 334   1          TR1 = 0;
+ 335   1          TL1=(65536-30000)%256;
+ 336   1          TH1=(65536-30000)/256;
+ 337   1      }
+ 338          
+ 339          
+ 340                    
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   1286    ----
+   CONSTANT SIZE    =     96    ----
+   XDATA SIZE       =     58    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     12      14
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+   EDATA SIZE       =   ----    ----
+   HDATA SIZE       =   ----    ----
+   XDATA CONST SIZE =   ----    ----
+   FAR CONST SIZE   =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

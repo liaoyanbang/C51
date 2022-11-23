@@ -1,0 +1,438 @@
+C51 COMPILER V9.60.0.0   I2C                                                               12/10/2021 22:39:26 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE I2C
+OBJECT MODULE PLACED IN .\Objects\I2C.obj
+COMPILER INVOKED BY: D:\Keil_v5\44444444444\C51\BIN\C51.EXE ..\HARDWARE\IIC\I2C.c OMF2 OPTIMIZE(9,SPEED) BROWSE INCDIR(.
+                    -.\HARDWARE\OLED;..\Project;..\TINY;..\HARDWARE\DS1203;..\HARDWARE\USART;..\HARDWARE\KEY;..\HARDWARE\AT24C02;..\HARDWARE\
+                    -ADC;..\HARDWARE\IIC;..\HARDWARE\PCF) DEBUG PRINT(.\Listings\I2C.lst) TABS(2) OBJECT(.\Objects\I2C.obj)
+
+line level    source
+
+   1          /*****************************************************
+   2          文件名：I2C.c
+   3          文件功能：模拟I2C的底层的C子程序
+   4          编写者：张阳
+   5          编写日期：2020-08-10
+   6          
+   7          *****************************************************/
+   8          
+   9          
+  10          
+  11          
+  12          /*头文件的包含*/
+  13          #include <absacc.h> 
+  14          #include <intrins.h>
+  15          #include "I2C.h"
+  16          
+  17          
+  18          
+  19          /*************************全局变量*************************/
+  20          bit ack;           /*应答标志位*/
+  21          
+  22          
+  23          
+  24          /*************************函数实现*************************/
+  25          /**********************************
+  26          启动总线函数
+  27          函数原形：void Start_I2c(void)
+  28          函数功能：启动I2C总线,即发送I2C起始条件
+  29          入口参数：无
+  30          出口参数：无
+  31          **********************************/
+  32          void Start_I2c(void)
+  33          {
+  34   1          SDA=1;        //发送起始条件的数据信号
+  35   1          _Nop();
+  36   1          SCL=1;
+  37   1          _Nop();       //起始条件建立时间大于4.7us,延时
+  38   1          _Nop();
+  39   1          _Nop();
+  40   1          _Nop();
+  41   1          _Nop();        
+  42   1          SDA=0;        //发送起始信号
+  43   1          _Nop();       //起始条件锁定时间大于4us
+  44   1          _Nop();
+  45   1          _Nop();
+  46   1          _Nop();
+  47   1          _Nop();       
+  48   1          SCL=0;        //钳住I2C总线，准备发送或接收数据
+  49   1          _Nop();
+  50   1          _Nop();
+  51   1      }
+  52          
+  53          
+C51 COMPILER V9.60.0.0   I2C                                                               12/10/2021 22:39:26 PAGE 2   
+
+  54          
+  55          
+  56          /**********************************
+  57          结束总线函数
+  58          函数原形：void Stop_I2c(void)
+  59          函数功能：结束I2C总线,即发送I2C结束条件
+  60          入口参数：无
+  61          出口参数：无
+  62          **********************************/
+  63          void Stop_I2c(void)
+  64          {
+  65   1          SDA=0;        //发送结束条件的数据信号
+  66   1          _Nop();       //发送结束条件的时钟信号
+  67   1          SCL=1;        //结束条件建立时间大于4us
+  68   1          _Nop();
+  69   1          _Nop();
+  70   1          _Nop();
+  71   1          _Nop();
+  72   1          _Nop();
+  73   1          SDA=1;        //发送I2C总线结束信号
+  74   1          _Nop();
+  75   1          _Nop();
+  76   1          _Nop();
+  77   1          _Nop();
+  78   1      }
+  79          
+  80          
+  81          
+  82          
+  83          /**********************************
+  84          字节数据发送函数
+  85          函数原形：void SendByte(unsigned char c)
+  86          函数功能：将数据c发送出去,可以是地址,也可以是数据,
+  87                    发完后等待应答,并对此状态位进行操作.
+  88                    (不应答或非应答都使ack=0 假)     
+  89                    发送数据正常，ack=1;ack=0表示被控器无应答或损坏。
+  90          入口参数：unsigned char c
+  91          出口参数：无
+  92          **********************************/
+  93          void SendByte(unsigned char c)
+  94          {
+  95   1          unsigned char BitCnt;
+  96   1          for(BitCnt=0;BitCnt<8;BitCnt++)   //要传送的数据长度为8位
+  97   1          {
+  98   2              if((c<<BitCnt)&0x80)
+  99   2              {
+ 100   3                  SDA=1;                        //判断发送位
+ 101   3              }
+ 102   2              else
+ 103   2              {
+ 104   3                  SDA=0;
+ 105   3              }  
+ 106   2                              
+ 107   2              _Nop();
+ 108   2              SCL=1;                         //置时钟线为高，通知被控器开始接收数据位
+ 109   2              _Nop(); 
+ 110   2              _Nop();                        //保证时钟高电平周期大于4us
+ 111   2              _Nop();
+ 112   2              _Nop();
+ 113   2              _Nop();         
+ 114   2              SCL=0; 
+ 115   2          }
+C51 COMPILER V9.60.0.0   I2C                                                               12/10/2021 22:39:26 PAGE 3   
+
+ 116   1            
+ 117   1          _Nop();
+ 118   1          _Nop();
+ 119   1          SDA=1;                           //8位发送完后释放数据线，准备接收应答位
+ 120   1          _Nop();
+ 121   1          _Nop();   
+ 122   1          SCL=1;
+ 123   1          _Nop();
+ 124   1          _Nop();
+ 125   1          _Nop();
+ 126   1          if(SDA==1)
+ 127   1          {
+ 128   2              ack=0;
+ 129   2          }
+ 130   1          else
+ 131   1          {
+ 132   2              ack=1;                         //判断是否接收到应答信号
+ 133   2          }     
+ 134   1               
+ 135   1          SCL=0;
+ 136   1          _Nop();
+ 137   1          _Nop();
+ 138   1      }
+ 139          
+ 140          
+ 141          
+ 142          
+ 143          /**********************************
+ 144          字节数据接收函数
+ 145          函数原形：unsigned char RcvByte(void)
+ 146          函数功能：用来接收从器件传来的数据,并判断总线错误(不发应答信号)，
+ 147                    发完后请用应答函数。
+ 148          入口参数：无
+ 149          出口参数：unsigned char型，返回接收到的数据
+ 150          **********************************/
+ 151          unsigned char RcvByte(void)
+ 152          {
+ 153   1          unsigned char retc;
+ 154   1          unsigned char BitCnt;
+ 155   1          
+ 156   1          retc=0; 
+ 157   1          SDA=1;                      //置数据线为输入方式
+ 158   1          for(BitCnt=0;BitCnt<8;BitCnt++)
+ 159   1          {
+ 160   2              _Nop();           
+ 161   2              SCL=0;                    //置时钟线为低，准备接收数据位
+ 162   2              _Nop();
+ 163   2              _Nop();                   //时钟低电平周期大于4.7us
+ 164   2              _Nop();
+ 165   2              _Nop();
+ 166   2              _Nop();
+ 167   2              SCL=1;                    //置时钟线为高使数据线上数据有效
+ 168   2              _Nop();
+ 169   2              _Nop();
+ 170   2              retc=retc<<1;
+ 171   2              if(SDA==1)retc=retc+1;    //读数据位,接收的数据位放入retc中
+ 172   2              _Nop();
+ 173   2              _Nop(); 
+ 174   2          }
+ 175   1          SCL=0;    
+ 176   1          _Nop();
+ 177   1          _Nop();
+C51 COMPILER V9.60.0.0   I2C                                                               12/10/2021 22:39:26 PAGE 4   
+
+ 178   1      
+ 179   1          return(retc);
+ 180   1      }
+ 181          
+ 182          
+ 183          
+ 184          
+ 185          /**********************************
+ 186          应答子函数
+ 187          函数原形：void Ack_I2c(bit a)
+ 188          函数功能：主控器进行应答信号,(可以是应答或非应答信号)
+ 189          入口参数：bit a
+ 190          出口参数：无
+ 191          **********************************/
+ 192          void Ack_I2c(bit a)
+ 193          {
+ 194   1        
+ 195   1          if(a==0)
+ 196   1          {
+ 197   2              SDA=0;
+ 198   2          }                     //在此发出应答或非应答信号
+ 199   1          else 
+ 200   1          {
+ 201   2              SDA=1;
+ 202   2          }
+ 203   1          _Nop();
+ 204   1          _Nop();
+ 205   1          _Nop();      
+ 206   1          SCL=1;
+ 207   1          _Nop();
+ 208   1          _Nop();               //时钟低电平周期大于4us
+ 209   1          _Nop();
+ 210   1          _Nop();
+ 211   1          _Nop();  
+ 212   1          SCL=0;                //清时钟线，钳住I2C总线以便继续接收
+ 213   1          _Nop();
+ 214   1          _Nop();    
+ 215   1      }
+ 216          
+ 217          
+ 218          
+ 219          
+ 220          /**********************************
+ 221          向无子地址器件发送字节数据函数
+ 222          函数原形：bit ISendByte(unsigned char sla, unsigned char c)
+ 223          函数功能：从启动总线到发送地址，数据，结束总线的全过程,从器件地址sla.
+ 224                    如果返回1表示操作成功，否则操作有误。
+ 225          入口参数：unsigned char sla, 
+ 226                    unsigned char c
+ 227          出口参数：返回是否成功标志位
+ 228          注意：    使用前必须已结束总线。
+ 229          **********************************/
+ 230          bit ISendByte(unsigned char sla, unsigned char c)
+ 231          {
+ 232   1          Start_I2c();                    //启动总线
+ 233   1          SendByte(sla);                  //发送器件地址
+ 234   1          if(ack==0)
+ 235   1          {
+ 236   2              return(0);
+ 237   2          }
+ 238   1          SendByte(c);                    //发送数据
+ 239   1          if(ack==0)
+C51 COMPILER V9.60.0.0   I2C                                                               12/10/2021 22:39:26 PAGE 5   
+
+ 240   1          { 
+ 241   2              return(0);
+ 242   2          }
+ 243   1          Stop_I2c();                   //结束总线 
+ 244   1      
+ 245   1          return(1);
+ 246   1      }
+ 247          
+ 248          
+ 249          
+ 250          
+ 251          /**********************************
+ 252          向有子地址器件发送多字节数据函数
+ 253          函数原形：ISendStr(uchar sla,uchar suba,uchar *s,uchar no)
+ 254          函数功能：从启动总线到发送地址，子地址,数据，结束总线的全过程,
+ 255                    从器件地址sla，子地址suba，发送内容是s指向的内容，
+ 256                    发送no个字节。如果返回1表示操作成功，否则操作有误。
+ 257          入口参数：unsigned char sla, 
+ 258                    unsigned char suba, 
+ 259                    unsigned char *s, 
+ 260                    unsigned char no
+ 261          出口参数：返回是否成功标志位
+ 262          注意：    使用前必须已结束总线。
+ 263          **********************************/
+ 264          bit ISendStr(unsigned char sla, unsigned char suba, unsigned char *s, unsigned char no)
+ 265          {
+ 266   1          unsigned char i;
+ 267   1      
+ 268   1          Start_I2c();                    //启动总线
+ 269   1          SendByte(sla);                  //发送器件地址
+ 270   1          if(ack==0)return(0);
+ 271   1          SendByte(suba);                 //发送器件子地址
+ 272   1          if(ack==0)return(0);
+ 273   1      
+ 274   1          for(i=0;i<no;i++)
+ 275   1          {   
+ 276   2              SendByte(*s);                 //发送数据
+ 277   2              if(ack==0)return(0);
+ 278   2              s++;
+ 279   2          } 
+ 280   1          Stop_I2c();                     //结束总线 
+ 281   1      
+ 282   1          return(1);
+ 283   1      }
+ 284          
+ 285          
+ 286          
+ 287          
+ 288          
+ 289          
+ 290          
+ 291          /**********************************
+ 292          向有子地址器件读取多字节数据函数
+ 293          函数原形：bit IRcvStr(unsigned char sla, unsigned char suba, unsigned char *s, unsigned char no)
+ 294          函数功能：从启动总线到发送地址，子地址，读数据，结束总线的全过程,
+ 295                    从器件地址sla，子地址suba，读出的内容放入s指向的存储区，读no个字节。
+ 296                    如果返回1表示操作成功，否则操作有误。
+ 297          入口参数：unsigned char sla, 
+ 298                    unsigned char suba, 
+ 299                    unsigned char *s, 
+ 300                    unsigned char no
+ 301          出口参数：返回是否成功标志位
+C51 COMPILER V9.60.0.0   I2C                                                               12/10/2021 22:39:26 PAGE 6   
+
+ 302          注意：    使用前必须已结束总线。
+ 303          **********************************/
+ 304          bit IRcvStr(unsigned char sla, unsigned char suba, unsigned char *s, unsigned char no)
+ 305          {
+ 306   1          unsigned char i;
+ 307   1      
+ 308   1          Start_I2c();               //启动总线
+ 309   1          SendByte(sla);             //发送器件地址
+ 310   1          if(ack==0)return(0);
+ 311   1          SendByte(suba);            //发送器件子地址
+ 312   1          if(ack==0)return(0);
+ 313   1      
+ 314   1          Start_I2c();
+ 315   1          SendByte(sla+1);
+ 316   1          if(ack==0)return(0);
+ 317   1      
+ 318   1          for(i=0;i<no-1;i++)
+ 319   1          {   
+ 320   2              *s=RcvByte();             //发送数据
+ 321   2              Ack_I2c(0);               //发送应答位  
+ 322   2              s++;
+ 323   2          } 
+ 324   1          *s=RcvByte();
+ 325   1          Ack_I2c(1);                 //发送非应位
+ 326   1          Stop_I2c();                 //结束总线 
+ 327   1          return(1);
+ 328   1      } 
+ 329          
+ 330          
+ 331          
+ 332          
+ 333          /**********************************
+ 334          向无子地址器件读多字节数据函数
+ 335          函数原形：bit mRcvByte(unsigned char sla, unsigned char *s,unsigned char no)
+ 336          函数功能：从启动总线到发送地址，子地址，读数据，结束总线的全过程,
+ 337                    从器件地址sla,读出的内容放入s指向的存储区，读no个字节。
+ 338                    如果返回1表示操作成功，否则操作有误。
+ 339          入口参数：unsigned char sla, 
+ 340                    unsigned char *c
+ 341                    
+ 342          出口参数：返回是否成功标志位
+ 343          注意：    使用前必须已结束总线。
+ 344          **********************************/
+ 345          bit mRcvByte(unsigned char sla, unsigned char *s,unsigned char no)
+ 346          {
+ 347   1          unsigned char i;
+ 348   1      
+ 349   1          Start_I2c();               //启动总线
+ 350   1          SendByte(sla+1);           //发送器件地址
+ 351   1          if(ack==0)return(0);
+ 352   1          for(i=0;i<no-1;i++)
+ 353   1          {   
+ 354   2              *s=RcvByte();            //发送数据
+ 355   2              Ack_I2c(0);              //发送应答位  
+ 356   2              s++;
+ 357   2          } 
+ 358   1          *s=RcvByte();
+ 359   1          Ack_I2c(1);                //发送非应位
+ 360   1          Stop_I2c();                //结束总线 
+ 361   1          return(1);
+ 362   1      } 
+ 363          
+C51 COMPILER V9.60.0.0   I2C                                                               12/10/2021 22:39:26 PAGE 7   
+
+ 364          
+ 365          
+ 366          
+ 367          /**********************************
+ 368          向无子地址器件发送多字节数据函数
+ 369          函数原形：bit SendStr(unsigned char sla, unsigned char *s, unsigned char no)
+ 370          函数功能：从启动总线到发送地址，子地址,数据，结束总线的全过程,
+ 371                    从器件地址sla，子地址suba，发送内容是s指向的内容，
+ 372                    发送no个字节。如果返回1表示操作成功，否则操作有误。
+ 373          入口参数：unsigned char sla, 
+ 374                    unsigned char suba, 
+ 375                    unsigned char *s, 
+ 376                    unsigned char no
+ 377          出口参数：返回是否成功标志位
+ 378          注意：    使用前必须已结束总线。
+ 379          **********************************/
+ 380          bit mSendStr(unsigned char sla, unsigned char *s, unsigned char no)
+ 381          {
+ 382   1          unsigned char i;
+ 383   1      
+ 384   1          Start_I2c();                    //启动总线
+ 385   1          SendByte(sla);                  //发送器件地址
+ 386   1          if(ack==0)return(0);
+ 387   1      
+ 388   1          for(i=0;i<no;i++)
+ 389   1          {   
+ 390   2              SendByte(*s);                 //发送数据
+ 391   2              if(ack==0)return(0);
+ 392   2              s++;
+ 393   2          } 
+ 394   1          Stop_I2c();                     //结束总线 
+ 395   1          return(1);
+ 396   1      }
+ 397          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    435    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----      22
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =      1       1
+   EDATA SIZE       =   ----    ----
+   HDATA SIZE       =   ----    ----
+   XDATA CONST SIZE =   ----    ----
+   FAR CONST SIZE   =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,256 @@
+C51 COMPILER V9.00   MAIN                                                                  05/19/2020 13:09:37 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN main.OBJ
+COMPILER INVOKED BY: D:\软件\keil+uvision4破解版下载\C51\BIN\C51.EXE main.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include<reg52.h>
+   2          #include"1602.h"
+   3          #include"ds18b20.h"
+   4          #define uint unsigned int
+   5          #define uchar unsigned char
+   6          sbit speaker=P1^5;                //定义蜂鸣器
+   7          sbit red=P2^0;                    //定义报警灯
+   8          //sbit green=P2^1;
+   9          sbit key1=P3^0;                   //定义温度按键
+  10          sbit key2=P3^1;                   //定义时间按键
+  11          
+  12          uint tem;                                 //定义采集温度
+  13          int htem,time;                    //定义温度、时间
+  14          int cnt1=1,cnt2=1;                //定义计数变量
+  15          int min,i;
+  16          uchar mode=0;                     //定义模式变量
+  17          uchar code t3[]={"high temp:     C"};
+  18          uchar code t4[]={"time:        MIN"};
+  19          
+  20          
+  21          //延时函数
+  22          void delay1(uint i)
+  23          {
+  24   1              while(i--);     
+  25   1      }
+  26          
+  27          
+  28          //显示函数1
+  29          void display(uint dat,uchar add)
+  30          {
+  31   1      uchar bai,shi ,ge;
+  32   1      bai=dat/100;
+  33   1      shi=dat%100/10;
+  34   1      ge=dat%10;                                                                                 
+  35   1      writelcd_cmd(add);
+  36   1      writelcd_dat(bai+0x30);
+  37   1      writelcd_dat(shi+0x30);
+  38   1      writelcd_cmd(add+3);
+  39   1      writelcd_dat(ge+0x30);
+  40   1      }
+  41          
+  42          
+  43          //显示函数2
+  44          void display2(uint dat,uchar add)
+  45          {
+  46   1      uchar bai,shi ;
+  47   1      bai=dat/100;
+  48   1      shi=dat%100/10;
+  49   1      //ge=dat%10;                                                                               
+  50   1      writelcd_cmd(add);
+  51   1      writelcd_dat(shi+0x30);
+  52   1      writelcd_dat(bai+0x30);
+  53   1      writelcd_cmd(add+3);
+  54   1      //writelcd_dat(ge+0x30);
+  55   1      }
+C51 COMPILER V9.00   MAIN                                                                  05/19/2020 13:09:37 PAGE 2   
+
+  56          
+  57          
+  58          //显示函数3
+  59          void display3(uint dat,uchar add)
+  60          {
+  61   1      uchar ge;
+  62   1      //bai=dat/100;
+  63   1      //shi=dat%100/10;
+  64   1      ge=dat%10;                                                                                 
+  65   1      writelcd_cmd(add);
+  66   1      //writelcd_dat(shi+0x30);
+  67   1      //writelcd_dat(bai+0x30);
+  68   1      //writelcd_cmd(add+3);
+  69   1      writelcd_dat(ge+0x30);
+  70   1      }
+  71          
+  72          
+  73          //按键扫描函数
+  74          void keyscan()
+  75          {  uchar i,j;
+  76   1         writelcd_cmd(0x80);
+  77   1         for(i=0;i<16;i++)
+  78   1         {writelcd_dat(t3[i]);}
+  79   1         writelcd_cmd(0xc0);
+  80   1         for(j=0;j<16;j++)
+  81   1         {writelcd_dat(t4[j]);}
+  82   1         
+  83   1         
+  84   1         while(mode!=0)
+  85   1         {
+  86   2      display2(htem,0x8b);
+  87   2      display3(time,0xca);
+  88   2         while(mode!=0)
+  89   2         {
+  90   3                 switch(mode)
+  91   3                 {
+  92   4                 case 1:writelcd_cmd(0xc0+10);writelcd_cmd(0x0f);break;
+  93   4                 case 2:writelcd_cmd(0x80+11);writelcd_cmd(0x0f);break;
+  94   4                 default:mode=0;break;
+  95   4                 }
+  96   3                if(key1==0&&mode==1)
+  97   3                {
+  98   4                  
+  99   4                      delay(50);
+ 100   4                      if(key1==0)
+ 101   4                      {  
+ 102   5                         cnt1++;
+ 103   5                         while(key1==0);
+ 104   5                         switch(cnt1%10)
+ 105   5                         {
+ 106   6                              case 1:time=1;min=1000;display3(time,0xca);writelcd_cmd(0xca+11);break;                  //1分钟
+ 107   6                      case 2:time=2;min=2000;display3(time,0xca);writelcd_cmd(0xca+11);break;                  //2分钟
+ 108   6                      case 3:time=3;min=3000;display3(time,0xca);writelcd_cmd(0xca+11);break;                  //3分钟
+ 109   6                              case 4:time=4;min=4000;display3(time,0xca);writelcd_cmd(0xca+11);break;                  //4分钟
+ 110   6                              case 5:time=5;min=5000;display3(time,0xca);writelcd_cmd(0xca+11);break;                  //5分钟
+ 111   6                              case 6:time=6;min=6000;display3(time,0xca);writelcd_cmd(0xca+11);break;                  //6分钟
+ 112   6                              case 7:time=7;min=7000;display3(time,0xca);writelcd_cmd(0xca+11);break;                  //7分钟
+ 113   6                              case 8:time=8;min=8000;display3(time,0xca);writelcd_cmd(0xca+11);break;                  //8分钟
+ 114   6                              case 9:time=9;min=9000;display3(time,0xca);writelcd_cmd(0xca+11);break;                  //9分钟
+ 115   6                              
+ 116   6                              default:break;  
+ 117   6                         }    
+C51 COMPILER V9.00   MAIN                                                                  05/19/2020 13:09:37 PAGE 3   
+
+ 118   5                      }
+ 119   4                }
+ 120   3      
+ 121   3                
+ 122   3                if(key2==0&&mode==2)
+ 123   3                {
+ 124   4                delay(10);
+ 125   4                if(key2==0)
+ 126   4                        {
+ 127   5                         cnt2++;
+ 128   5                         while(key2==0);
+ 129   5                         switch(cnt2%4)
+ 130   5                         {
+ 131   6                          case 1:htem=20;display2(htem,0x8b);writelcd_cmd(0x80+11);break;               //20摄氏度
+ 132   6                          case 2:htem=50;display2(htem,0x8b);writelcd_cmd(0x80+11);break;               //50摄氏度
+ 133   6                          case 3:htem=80;display2(htem,0x8b);writelcd_cmd(0x80+11);break;               //80摄氏度
+ 134   6                          default:break;
+ 135   6                         }
+ 136   5                        }
+ 137   4                }
+ 138   3         }
+ 139   2        }
+ 140   1        lcd_init();
+ 141   1      }
+ 142          
+ 143          
+ 144          //中断初始化函数
+ 145          void init()
+ 146          {
+ 147   1        lcd_init();              //lcd初始化
+ 148   1         speaker=1;
+ 149   1         red=0;
+ 150   1         mode=0;
+ 151   1         htem=20;
+ 152   1         time=1;
+ 153   1         EA=1;                                //总中断开启
+ 154   1         EX0=1;                               //外部中断0允许
+ 155   1         ET0=1;                               //定时器0允许
+ 156   1         TMOD=0X01;                   //定时中断0，模式1
+ 157   1         IT0=1;                               //下降沿触发
+ 158   1         TH0=0Xee;                    //0.5us
+ 159   1         TL0=0X00;
+ 160   1         //TR0=0;
+ 161   1      }
+ 162          
+ 163          
+ 164          
+ 165          //主函数
+ 166          void main()
+ 167          {  
+ 168   1          red=0;
+ 169   1              init();           //中断初始化
+ 170   1              while(1)
+ 171   1              {  
+ 172   2                      if(mode!=0)
+ 173   2                      {keyscan();}
+ 174   2      
+ 175   2              else if(mode==0)
+ 176   2                      {       
+ 177   3                          delay(100);
+ 178   3                          tmpchange();
+ 179   3                              tem=tmp();                       //温度值获取
+C51 COMPILER V9.00   MAIN                                                                  05/19/2020 13:09:37 PAGE 4   
+
+ 180   3      
+ 181   3                              if(tem>=(htem*10))              //高于设定温度
+ 182   3                              { 
+ 183   4                                TR0=1;                                //中断开启
+ 184   4                                red=1;                                //报警灯亮                                        
+ 185   4                              }
+ 186   3                              else                                //低于设定温度
+ 187   3                              {
+ 188   4                              TR0=0;                                  //中断关闭
+ 189   4                  red=0;                              //报警灯灭
+ 190   4                              }
+ 191   3                              
+ 192   3                              delay(10);
+ 193   3                          display(tem,0xca);
+ 194   3                          delay(100);
+ 195   3                              TR0=0;
+ 196   3                                
+ 197   3                      }
+ 198   2              }
+ 199   1      }
+ 200          
+ 201          
+ 202          
+ 203          //外部中断服务函数
+ 204          void exter()interrupt 0
+ 205          {
+ 206   1      delay(50);               //按键消抖
+ 207   1      if(P3^2==0)
+ 208   1      mode++;                  
+ 209   1      mode=mode%4 ;    //每按4次置0
+ 210   1      }
+ 211          
+ 212          
+ 213          //定时中断服务函数
+ 214          void timer0()interrupt 1
+ 215          {
+ 216   1       TH0=0Xee;               //重装载
+ 217   1       TL0=0X00;
+ 218   1       min--;
+ 219   1       if(min<=0)              //计时时间到
+ 220   1       {
+ 221   2         red=1;        //报警灯闪烁
+ 222   2         delay(200);
+ 223   2         speaker=~speaker;delay1(1);   //蜂鸣器报警
+ 224   2         TR0=0;                //定时中断关闭
+ 225   2       }
+ 226   1       
+ 227   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    952    ----
+   CONSTANT SIZE    =     34    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     15      10
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

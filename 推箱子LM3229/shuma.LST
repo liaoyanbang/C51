@@ -1,0 +1,69 @@
+C51 COMPILER V9.60.0.0   SHUMA                                                             05/13/2021 21:44:24 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE SHUMA
+OBJECT MODULE PLACED IN shuma.OBJ
+COMPILER INVOKED BY: D:\Keil_v5\44444444444\C51\BIN\C51.EXE shuma.c COMPACT OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND 
+                    -TABS(2)
+
+line level    source
+
+   1          #include "shuma.h"
+   2          
+   3          unsigned char code wxcode[4]={0xfe,0xfd,0xfb,0xf7};
+   4          unsigned char code dxcode[10]={0x3f,0x06,0x5b,0x4f,0x66,0x6d,0x7d,0x07,0x7f,0x6f};
+   5          #define duanxuan P1       
+   6          #define weixuan P2    
+   7          
+   8          void DigDisplay(int num)
+   9          {
+  10   1        unsigned char i;
+  11   1        unsigned int j;
+  12   1        int gewei,shiwei,baiwei,qianwei;
+  13   1        
+  14   1        gewei = num % 10;
+  15   1        shiwei = num / 10 % 10;
+  16   1        baiwei = num / 100 % 10;
+  17   1        qianwei = num / 1000;
+  18   1        
+  19   1        for(i=0; i<4; i++)
+  20   1        {
+  21   2           weixuan = wxcode[i];
+  22   2           duanxuan = 0x00;
+  23   2          if(i == 3)
+  24   2          {
+  25   3            duanxuan = dxcode[gewei];
+  26   3          }
+  27   2          if(i == 2)
+  28   2          {
+  29   3            duanxuan = dxcode[shiwei];
+  30   3          }
+  31   2          if(i == 1)
+  32   2          {
+  33   3            duanxuan = dxcode[baiwei];
+  34   3          }
+  35   2          if(i == 0)
+  36   2          {
+  37   3            duanxuan = dxcode[qianwei];
+  38   3          }
+  39   2          j=10;
+  40   2          while(j--);
+  41   2          duanxuan=0x00;
+  42   2        }
+  43   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    231    ----
+   CONSTANT SIZE    =     14    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----       8
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+C51 COMPILER V9.60.0.0   SHUMA                                                             05/13/2021 21:44:24 PAGE 2   
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

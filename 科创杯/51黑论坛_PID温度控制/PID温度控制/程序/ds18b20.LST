@@ -1,0 +1,133 @@
+C51 COMPILER V9.00   DS18B20                                                               05/19/2020 13:09:37 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE DS18B20
+OBJECT MODULE PLACED IN ds18b20.OBJ
+COMPILER INVOKED BY: D:\软件\keil+uvision4破解版下载\C51\BIN\C51.EXE ds18b20.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include <reg52.h>
+   2          #include"1602.h"
+   3          #define uchar unsigned char
+   4          #define uint unsigned int
+   5          sbit DS=P3^7;                                             
+   6          
+   7          void dsreset()     
+   8          {
+   9   1        uint i;
+  10   1        DS=0;
+  11   1        i=103;
+  12   1        while(i>0)i--; //延时大约480us~960us
+  13   1        DS=1;
+  14   1        i=4;
+  15   1        while(i>0)i--; //延时大约60us~240us
+  16   1      }
+  17          
+  18          bit tmpreadbit()  //18b20读一位数据     
+  19          {
+  20   1         uint i;
+  21   1         bit dat;
+  22   1         DS=0;i++;    //拉低大约1us左右      
+  23   1         DS=1;i++;i++;
+  24   1         dat=DS;                //读回数据
+  25   1         i=8;while(i>0)i--; //延时45ms左右
+  26   1         return (dat);
+  27   1      }
+  28          
+  29          uchar tmpread()   //18b20读一个字节函数
+  30          {
+  31   1        uchar i,j,dat;
+  32   1        dat=0;
+  33   1        for(i=1;i<=8;i++)
+  34   1        {
+  35   2          j=tmpreadbit();
+  36   2          dat=(j<<7)|(dat>>1);   
+  37   2        }
+  38   1        return(dat);
+  39   1      }
+  40          
+  41          void tmpwrite1()  //向18b20写入1
+  42          {         uint i;
+  43   1            DS=0;
+  44   1            i++;i++;  //延时15us左右
+  45   1            DS=1;
+  46   1            i=8;while(i>0)i--;
+  47   1      }
+  48          
+  49          void tmpwrite0()  //向18b20写入0
+  50          {        uint i;
+  51   1            DS=0;       
+  52   1            i=8;while(i>0)i--; //延时60us左右
+  53   1            DS=1;
+  54   1            i++;i++;
+  55   1      }
+C51 COMPILER V9.00   DS18B20                                                               05/19/2020 13:09:37 PAGE 2   
+
+  56          
+  57          void tmpwritebyte(uchar dat)//18b20写一个字节函数   
+  58          {
+  59   1        uchar j;
+  60   1        bit testb;
+  61   1        for(j=1;j<=8;j++)
+  62   1        {
+  63   2          testb=dat&0x01;
+  64   2          dat=dat>>1;
+  65   2          if(testb)     
+  66   2          {
+  67   3           tmpwrite1();
+  68   3          }
+  69   2          else
+  70   2          {
+  71   3           tmpwrite0(); 
+  72   3          }
+  73   2      
+  74   2        }
+  75   1      }
+  76          
+  77          void tmpchange()        //18b20温度转换函数
+  78          {                                               //18b20执行序列：
+  79   1        dsreset();                    //1、初始化
+  80   1        delay(1);                             //
+  81   1        tmpwritebyte(0xcc);   //2、rom操作指令
+  82   1        tmpwritebyte(0x44);   //3、18b20功能操作指令
+  83   1      }
+  84          
+  85          uint tmp()               
+  86          {
+  87   1        uint temp;
+  88   1        float tt;
+  89   1        uchar a,b;
+  90   1        dsreset();
+  91   1        delay(1);
+  92   1        tmpwritebyte(0xcc);
+  93   1        tmpwritebyte(0xbe);
+  94   1        a=tmpread();
+  95   1        b=tmpread();
+  96   1        temp=b;
+  97   1        temp<<=8;             
+  98   1        temp=temp|a;
+  99   1        tt=temp*0.0625;
+ 100   1        temp=tt*10+0.5;  //加0.5四舍五入
+ 101   1        return temp;
+ 102   1      }
+ 103          
+ 104          
+ 105          
+ 106                                  
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    284    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       4
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----       2
+END OF MODULE INFORMATION.
+
+C51 COMPILER V9.00   DS18B20                                                               05/19/2020 13:09:37 PAGE 3   
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

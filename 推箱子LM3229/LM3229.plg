@@ -1,0 +1,1057 @@
+<html>
+<body>
+<pre>
+<h1>礦ision Build Log</h1>
+<h2>Project:</h2>
+C:\Documents and Settings\Administrator\桌面\LCD(LM3229)\LM3229.uvproj
+Project File Date:  04/25/2014
+
+<h2>Output:</h2>
+Build target '目标 1'
+compiling LM3229.c...
+TEXT1.H(3): error C136: invalid dimension size: [0]
+TEXT1.H(3): error C231: 'map': redefinition
+TEXT1.H(12): error C231: 'map': redefinition
+TEXT1.H(14): error C279: 'map': multiple initialization
+TEXT1.H(14): error C231: 'map': redefinition
+TEXT1.H(23): error C231: 'map': redefinition
+TEXT1.H(25): error C279: 'map': multiple initialization
+TEXT1.H(25): error C231: 'map': redefinition
+TEXT1.H(25): error C231: 'map': redefinition
+TEXT1.H(34): error C231: 'map': redefinition
+Target not created
+Build target '目标 1'
+compiling LM3229.c...
+TEXT1.H(12): error C141: syntax error near ';'
+TEXT1.H(14): error C141: syntax error near '{'
+Target not created
+Build target '目标 1'
+compiling LM3229.c...
+LM3229.C(146): warning C280: 'j': unreferenced local variable
+LM3229.C(147): warning C280: 'i': unreferenced local variable
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+Program Size: data=43.0 xdata=0 code=2519
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 4 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+LM3229.C(146): warning C280: 'j': unreferenced local variable
+LM3229.C(147): warning C280: 'i': unreferenced local variable
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+Program Size: data=43.0 xdata=0 code=2519
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 4 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+LM3229.C(146): warning C280: 'j': unreferenced local variable
+LM3229.C(147): warning C280: 'i': unreferenced local variable
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+Program Size: data=43.0 xdata=0 code=2519
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 4 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+LM3229.C(188): warning C280: 'j': unreferenced local variable
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SHENGLI?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?DISXG?LM3229
+Program Size: data=41.0 xdata=0 code=2753
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 5 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+LM3229.C(188): warning C280: 'j': unreferenced local variable
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SHENGLI?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?DISXG?LM3229
+Program Size: data=41.0 xdata=0 code=2753
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 5 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+LM3229.C(188): warning C280: 'j': unreferenced local variable
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SHENGLI?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?DISXG?LM3229
+Program Size: data=43.0 xdata=0 code=2757
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 5 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+LM3229.C(188): warning C280: 'j': unreferenced local variable
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SHENGLI?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?DISXG?LM3229
+Program Size: data=43.0 xdata=0 code=2757
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 5 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+LM3229.C(197): warning C280: 'j': unreferenced local variable
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SHENGLI?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?DISXG?LM3229
+Program Size: data=43.0 xdata=0 code=2772
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 5 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+LM3229.C(202): error C202: 'start': undefined identifier
+LM3229.C(207): error C233: 'over': undefined label
+Target not created
+Build target '目标 1'
+compiling LM3229.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SHENGLI?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?DISXG?LM3229
+Program Size: data=42.0 xdata=0 code=2798
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 4 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+LM3229.C(195): warning C280: 'k': unreferenced local variable
+LM3229.C(200): warning C280: 'k': unreferenced local variable
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SHENGLI?LM3229
+Program Size: data=44.0 xdata=0 code=2870
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 5 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+LM3229.C(195): warning C280: 'k': unreferenced local variable
+LM3229.C(200): warning C280: 'k': unreferenced local variable
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SHENGLI?LM3229
+Program Size: data=44.0 xdata=0 code=2867
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 5 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+LM3229.C(195): warning C280: 'k': unreferenced local variable
+LM3229.C(200): warning C280: 'k': unreferenced local variable
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SHENGLI?LM3229
+Program Size: data=44.0 xdata=0 code=2627
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 5 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+LM3229.C(199): warning C280: 'k': unreferenced local variable
+LM3229.C(204): warning C280: 'k': unreferenced local variable
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SHENGLI?LM3229
+Program Size: data=44.0 xdata=0 code=2683
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 5 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+LM3229.C(199): warning C280: 'k': unreferenced local variable
+LM3229.C(204): warning C280: 'k': unreferenced local variable
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SHENGLI?LM3229
+Program Size: data=40.0 xdata=0 code=2671
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 5 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+LM3229.C(199): warning C280: 'k': unreferenced local variable
+LM3229.C(204): warning C280: 'k': unreferenced local variable
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SHENGLI?LM3229
+Program Size: data=40.0 xdata=0 code=2671
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 5 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+LM3229.C(199): warning C280: 'k': unreferenced local variable
+LM3229.C(204): warning C280: 'k': unreferenced local variable
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SHENGLI?LM3229
+Program Size: data=40.0 xdata=0 code=2671
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 5 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+LM3229.C(205): warning C280: 'k': unreferenced local variable
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SHENGLI?LM3229
+Program Size: data=44.0 xdata=0 code=2747
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 4 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+LM3229.C(205): warning C280: 'k': unreferenced local variable
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SHENGLI?LM3229
+Program Size: data=44.0 xdata=0 code=2747
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 4 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+LM3229.C(192): error C202: 'oxff': undefined identifier
+LM3229.C(197): error C233: 'over': undefined label
+Target not created
+Build target '目标 1'
+compiling LM3229.c...
+LM3229.C(205): warning C280: 'k': unreferenced local variable
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SHENGLI?LM3229
+Program Size: data=44.0 xdata=0 code=2766
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 4 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+LM3229.C(205): warning C280: 'k': unreferenced local variable
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SHENGLI?LM3229
+Program Size: data=44.0 xdata=0 code=2766
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 4 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+LM3229.C(207): warning C280: 'k': unreferenced local variable
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SHENGLI?LM3229
+Program Size: data=44.0 xdata=0 code=2776
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 4 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+LM3229.C(207): warning C280: 'k': unreferenced local variable
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SHENGLI?LM3229
+Program Size: data=44.0 xdata=0 code=2776
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 4 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+LM3229.C(207): warning C280: 'k': unreferenced local variable
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SHENGLI?LM3229
+Program Size: data=44.0 xdata=0 code=2776
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 4 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+LM3229.C(207): warning C280: 'k': unreferenced local variable
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SHENGLI?LM3229
+Program Size: data=44.0 xdata=0 code=2769
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 4 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+LM3229.C(209): warning C280: 'k': unreferenced local variable
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SHENGLI?LM3229
+Program Size: data=44.0 xdata=0 code=2776
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 4 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+LM3229.C(209): warning C280: 'k': unreferenced local variable
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SHENGLI?LM3229
+Program Size: data=44.0 xdata=0 code=2782
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 4 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+LM3229.C(209): warning C280: 'k': unreferenced local variable
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SHENGLI?LM3229
+Program Size: data=44.0 xdata=0 code=2782
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 4 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+LM3229.C(211): warning C280: 'k': unreferenced local variable
+LM3229.C(246): error C249: 'DATA': SEGMENT TOO LARGE
+Target not created
+Build target '目标 1'
+compiling LM3229.c...
+LM3229.C(211): warning C280: 'k': unreferenced local variable
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SHENGLI?LM3229
+Program Size: data=84.0 xdata=0 code=2825
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 4 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+LM3229.C(211): warning C280: 'k': unreferenced local variable
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SHENGLI?LM3229
+Program Size: data=84.0 xdata=0 code=2782
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 4 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+LM3229.C(211): warning C280: 'k': unreferenced local variable
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SHENGLI?LM3229
+Program Size: data=84.0 xdata=0 code=2782
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 4 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+LM3229.C(211): warning C280: 'k': unreferenced local variable
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SHENGLI?LM3229
+Program Size: data=124.0 xdata=0 code=2782
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 4 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+LM3229.C(211): warning C280: 'k': unreferenced local variable
+LM3229.C(241): error C249: 'DATA': SEGMENT TOO LARGE
+Target not created
+Build target '目标 1'
+compiling LM3229.c...
+LM3229.C(211): warning C280: 'k': unreferenced local variable
+LM3229.C(241): error C249: 'DATA': SEGMENT TOO LARGE
+Target not created
+Build target '目标 1'
+compiling LM3229.c...
+LM3229.C(211): warning C280: 'k': unreferenced local variable
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SHENGLI?LM3229
+Program Size: data=124.0 xdata=0 code=2782
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 4 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+LM3229.C(211): warning C280: 'k': unreferenced local variable
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SHENGLI?LM3229
+Program Size: data=54.0 xdata=0 code=2407
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 4 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+LM3229.C(211): warning C280: 'k': unreferenced local variable
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SHENGLI?LM3229
+Program Size: data=54.0 xdata=0 code=2169
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 4 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+LM3229.C(211): warning C280: 'k': unreferenced local variable
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SHENGLI?LM3229
+Program Size: data=114.0 xdata=0 code=2169
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 4 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+LM3229.C(211): warning C280: 'k': unreferenced local variable
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SHENGLI?LM3229
+Program Size: data=114.0 xdata=0 code=2169
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 4 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+LM3229.C(214): warning C280: 'k': unreferenced local variable
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SHENGLI?LM3229
+Program Size: data=114.0 xdata=0 code=2220
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 4 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SHENGLI?LM3229
+Program Size: data=114.0 xdata=0 code=2226
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 3 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SHENGLI?LM3229
+Program Size: data=114.0 xdata=0 code=2226
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 3 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SHENGLI?LM3229
+Program Size: data=114.0 xdata=0 code=2248
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 3 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SHENGLI?LM3229
+Program Size: data=114.0 xdata=0 code=2303
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 3 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SHENGLI?LM3229
+Program Size: data=114.0 xdata=0 code=2303
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 3 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SHENGLI?LM3229
+Program Size: data=114.0 xdata=0 code=2303
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 3 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SHENGLI?LM3229
+Program Size: data=114.0 xdata=0 code=2378
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 3 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SHENGLI?LM3229
+Program Size: data=114.0 xdata=0 code=2380
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 3 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SHENGLI?LM3229
+Program Size: data=114.0 xdata=0 code=2378
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 3 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SHENGLI?LM3229
+Program Size: data=114.0 xdata=0 code=2378
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 3 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+LM3229.C(230): warning C275: expression with possibly no effect
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SHENGLI?LM3229
+Program Size: data=114.0 xdata=0 code=2378
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 4 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SHENGLI?LM3229
+Program Size: data=114.0 xdata=0 code=2391
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 3 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+LM3229.C(230): error C202: 'renh1': undefined identifier
+Target not created
+Build target '目标 1'
+compiling LM3229.c...
+LM3229.C(230): error C202: 'renhl': undefined identifier
+Target not created
+Build target '目标 1'
+compiling LM3229.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SHENGLI?LM3229
+Program Size: data=114.0 xdata=0 code=2556
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 3 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SHENGLI?LM3229
+Program Size: data=114.0 xdata=0 code=2556
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 3 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SHENGLI?LM3229
+Program Size: data=114.0 xdata=0 code=2454
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 3 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SHENGLI?LM3229
+Program Size: data=114.0 xdata=0 code=2556
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 3 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SHENGLI?LM3229
+Program Size: data=114.0 xdata=0 code=2556
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 3 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SHENGLI?LM3229
+Program Size: data=114.0 xdata=0 code=2556
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 3 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SHENGLI?LM3229
+Program Size: data=114.0 xdata=0 code=2544
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 3 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SHENGLI?LM3229
+Program Size: data=114.0 xdata=0 code=2547
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 3 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SHENGLI?LM3229
+Program Size: data=114.0 xdata=0 code=2547
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 3 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SHENGLI?LM3229
+Program Size: data=114.0 xdata=0 code=2829
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 3 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SHENGLI?LM3229
+Program Size: data=114.0 xdata=0 code=2837
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 3 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SHENGLI?LM3229
+Program Size: data=114.0 xdata=0 code=2834
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 3 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SHENGLI?LM3229
+Program Size: data=114.0 xdata=0 code=2892
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 3 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+LM3229.C(120): error C141: syntax error near ''
+Target not created
+Build target '目标 1'
+compiling LM3229.c...
+LM3229.C(120): error C141: syntax error near ''
+Target not created
+Build target '目标 1'
+compiling LM3229.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SHENGLI?LM3229
+Program Size: data=116.0 xdata=0 code=2880
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 3 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SHENGLI?LM3229
+Program Size: data=116.0 xdata=0 code=2893
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 3 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+Program Size: data=116.0 xdata=0 code=2972
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 2 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+Program Size: data=116.0 xdata=0 code=2972
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 2 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+Program Size: data=116.0 xdata=0 code=2999
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 2 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+Program Size: data=116.0 xdata=0 code=2999
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 2 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+Program Size: data=116.0 xdata=0 code=3000
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 2 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+LM3229.C(317): warning C206: 'clearlcd': missing function-prototype
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LCDCLEAR?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?CLDISXG?LM3229
+*** WARNING L1: UNRESOLVED EXTERNAL SYMBOL
+    SYMBOL:  CLEARLCD
+    MODULE:  LM3229.obj (LM3229)
+*** WARNING L2: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  CLEARLCD
+    MODULE:  LM3229.obj (LM3229)
+    ADDRESS: 0A85H
+Program Size: data=116.0 xdata=0 code=3003
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 6 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?CLDISXG?LM3229
+Program Size: data=116.0 xdata=0 code=3003
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 2 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?CLDISXG?LM3229
+Program Size: data=116.0 xdata=0 code=3006
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 2 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+Program Size: data=116.0 xdata=0 code=2970
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 1 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+Program Size: data=116.0 xdata=0 code=2970
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 1 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DISBMP?LM3229
+Program Size: data=116.0 xdata=0 code=2976
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 1 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+linking...
+Program Size: data=103.0 xdata=0 code=2794
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 0 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+linking...
+Program Size: data=103.0 xdata=0 code=2794
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 0 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+linking...
+Program Size: data=103.0 xdata=0 code=2896
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 0 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+linking...
+Program Size: data=103.0 xdata=0 code=2895
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 0 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+linking...
+Program Size: data=103.0 xdata=0 code=2912
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 0 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+LM3229.C(141): warning C206: 'disxg': missing function-prototype
+LM3229.C(146): error C231: 'disxg': redefinition
+LM3229.C(151): error C231: 'disxg': redefinition
+Target not created
+Build target '目标 1'
+compiling LM3229.c...
+linking...
+Program Size: data=103.0 xdata=0 code=2915
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 0 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+linking...
+Program Size: data=103.0 xdata=0 code=2891
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 0 Warning(s).
+Build target '目标 1'
+compiling LM3229.c...
+linking...
+Program Size: data=103.0 xdata=0 code=2891
+creating hex file from "LM3229"...
+"LM3229" - 0 Error(s), 0 Warning(s).

@@ -1,0 +1,43 @@
+async function XAdd(id, name) {
+    console.log("Send Request for " + id + " " + name);
+    let _resp = await fetch("https://jxfw.gdut.edu.cn/xsxklist!getAdd.action", {
+        "credentials": "include",
+        "headers": {
+            "accept": "text/plain, */*; q=0.01",
+            "accept-language": "zh,zh-CN;q=0.9,en;q=0.8",
+            "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+            "x-requested-with": "XMLHttpRequest"
+        },
+        "referrer": "http://jxfw.gdut.edu.cn/xsxklist!xsmhxsxk.action",
+        "referrerPolicy": "no-referrer-when-downgrade",
+        "body": "kcrwdm=" + id + "&kcmc=" + name,
+        "method": "POST",
+        "mode": "cors"
+    });
+    console.log([_resp, await _resp.text()])
+}
+
+// 请提前登陆进入抢课页面，在Devtools中的Console或`Sources->Snippet`中运行此脚本
+let sTime = new Date(2020, 10, 30, 14, 0, 0); // 抢课开始时间，注意：月份数字应-1(即12月填11)
+let sPreserve = 80; // 预估网络延迟，建议通过Tcping
+let sInterval = 25; // 请求发送间隔
+let tryTimes  = 5; // 重试次数
+// 建议监测Devtools中Network面板，请求发送成功后手动停止剩余请求
+
+let sList = [
+    // 填入你希望的课程和名称，通过Devtools中Inspector抓取
+    { id: 1180198, name: "周三89节，游泳" },
+];
+let tWait = [];
+
+// 循环 tryTimes 次
+for (let _loop = 0; _loop < tryTimes; _loop++) {
+    // 将所有课程加入队列
+    for (let i = 0; i < sList.length; i++) {
+        let now = Date.now();
+        tWait.push(setTimeout(() => {
+            XAdd(sList[i].id, sList[i].name);
+            // 计算具体执行时间
+        }, sTime - now - sPreserve + i * sInterval));
+    }
+}

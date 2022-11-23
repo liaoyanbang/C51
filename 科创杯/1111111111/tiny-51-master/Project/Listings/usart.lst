@@ -1,0 +1,97 @@
+C51 COMPILER V9.60.0.0   USART                                                             12/10/2021 22:39:26 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE USART
+OBJECT MODULE PLACED IN .\Objects\usart.obj
+COMPILER INVOKED BY: D:\Keil_v5\44444444444\C51\BIN\C51.EXE ..\HARDWARE\USART\usart.c OMF2 OPTIMIZE(9,SPEED) BROWSE INCD
+                    -IR(..\HARDWARE\OLED;..\Project;..\TINY;..\HARDWARE\DS1203;..\HARDWARE\USART;..\HARDWARE\KEY;..\HARDWARE\AT24C02;..\HARDW
+                    -ARE\ADC;..\HARDWARE\IIC;..\HARDWARE\PCF) DEBUG PRINT(.\Listings\usart.lst) TABS(2) OBJECT(.\Objects\usart.obj)
+
+line level    source
+
+   1          #include "usart.h"
+   2          #include "main.h"  
+   3          
+   4          
+   5          
+   6          void usart_init(void)
+   7          {
+   8   1        TMOD |= 0x20;
+   9   1        SCON = 0x50;
+  10   1        TH1 = 0xFA;
+  11   1        TL1 = TH1;
+  12   1        PCON = 0x00;
+  13   1        TR1 = 1;
+  14   1        ES=1;           //打开接收中断
+  15   1        EA=1;           //打开总中断
+  16   1        
+  17   1      }
+  18          
+  19          
+  20          void send_byte(unsigned char dat)
+  21          {
+  22   1        ES = 0;
+  23   1        SBUF = dat;
+  24   1        while(!TI);
+  25   1        TI = 0;   
+  26   1        ES = 1;
+  27   1      }
+  28          
+  29          /*发送一个字符串*/
+  30          void send_string(unsigned char *p)
+  31          {
+  32   1        while(*p!= '\0')
+  33   1        {
+  34   2          send_byte(*p);
+  35   2          p++;
+  36   2        }
+  37   1      }
+  38          
+  39          void Usart_Rx() interrupt 4
+  40          {
+  41   1        unsigned char Res;
+  42   1        if(RI==1)
+  43   1        {
+  44   2          RI=0;
+  45   2          Res =SBUF;  
+  46   2          if((USART_RX_STA&0x80)==0)
+  47   2            {
+  48   3            if(USART_RX_STA&0x40)
+  49   3              {
+  50   4              if(Res!=0x0a)USART_RX_STA=0;
+  51   4              else USART_RX_STA|=0x80;  
+  52   4              }
+  53   3            else 
+C51 COMPILER V9.60.0.0   USART                                                             12/10/2021 22:39:26 PAGE 2   
+
+  54   3              { 
+  55   4              if(Res==0x0d)USART_RX_STA|=0x40;
+  56   4              else
+  57   4                {
+  58   5                USART_RX_BUF[USART_RX_STA&0X3F]=Res ;
+  59   5                USART_RX_STA++;
+  60   5                if(USART_RX_STA>(USART_REC_LEN-1))USART_RX_STA=0;
+  61   5                }    
+  62   4              }
+  63   3            } 
+  64   2          }
+  65   1      }
+  66          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    151    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+   EDATA SIZE       =   ----    ----
+   HDATA SIZE       =   ----    ----
+   XDATA CONST SIZE =   ----    ----
+   FAR CONST SIZE   =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

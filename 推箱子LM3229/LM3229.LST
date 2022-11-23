@@ -1,0 +1,791 @@
+C51 COMPILER V9.60.0.0   LM3229                                                            05/15/2021 00:24:16 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE LM3229
+OBJECT MODULE PLACED IN LM3229.OBJ
+COMPILER INVOKED BY: D:\Keil_v5\44444444444\C51\BIN\C51.EXE LM3229.c COMPACT OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND
+                    - TABS(2)
+
+line level    source
+
+   1          #include <reg52.h>
+   2          #include <Text1.h> //关卡的界面
+   3          #include <Text2.h> //在此文件中定义了汉字编码，用点阵液晶字模提取软件
+   4          #include <math.h>
+   5          //#include "iic.h"
+   6          #include "shuma.h"
+   7          //#include "uart.h"
+   8          //#include "led.h"
+   9          #include "delay.h"
+  10          #include "RTX51TNY.h"
+  11          #include "music.h"
+  12          #define uc unsigned char
+  13          #define ui unsigned int
+  14          #define AT24C02_ADDR 0xa0  //AT24C02地址
+  15          
+  16          #define d P0    //数据口
+  17          sbit cd=P3^0;   //=0，数据通道；=1，命令通道
+  18          sbit rd=P3^1;   //=0，读选通有效
+  19          sbit wr=P3^2;   //=0，写选通有效
+  20          char hp=100;//基地血量
+  21          uc renh=0,renl=1,startf=0,guan=1,jiemian=0,money=50,count=0,Count1=10,TAcount=0;
+  22          //  光标行  列   游戏标志   关     界面     钱     已出怪数 总怪数     塔数   
+  23          /*
+  24          startf  0    1     2    3   4 
+  25                 暂停 进行 结束 启动 选关*/
+  26          int fenshu=0;//分数
+  27          extern unsigned int tone;          //tone保存音调
+  28           typedef xdata struct   GUAI
+  29          {
+  30            uc x;
+  31            uc y;
+  32            uc type;
+  33            char guaihp;
+  34          } GUAI;
+  35          
+  36          typedef xdata struct  TA
+  37          {
+  38            uc x;
+  39            uc y;
+  40            uc type;
+  41            uc fanwei;
+  42            uc shanghai;
+  43            uc pinshu;//多少频数才攻击一次
+  44          }TA;
+  45          
+  46          uc idata rammap[8][10];
+  47          TA idata ta[5];
+  48          
+  49          void disguangbiao();//显示光标
+  50          void disjiemian0();//游戏开始界面
+  51          void disjiemian1();//关卡选择界面
+  52          void disjiemian2();
+  53          void disfenshu();//实时显示分数
+  54          void HP1();//显示血量
+C51 COMPILER V9.60.0.0   LM3229                                                            05/15/2021 00:24:16 PAGE 2   
+
+  55          void disxg();
+  56          void Money1();
+  57          void keychuli(uc  k);
+  58          void xuanguan(uc k);     //选关处理
+  59          void huifumubiao();   //恢复目标显示（踩的目标）
+  60          void game(uc k);      //游戏控制
+  61          void clear(); //清屏
+  62          void huata(); //画塔
+  63          void huaguai();//画怪
+  64          void shengli();//判断是否胜利，在循环的最后面
+  65          uc key();
+  66          void huamap();
+  67          void guaidong(GUAI guai[]);
+  68          
+  69          
+  70          void lcddatw(uc dat)  //写数据
+  71          {
+  72   1      cd=0;
+  73   1      wr=0;
+  74   1      d=dat;
+  75   1      wr=1;
+  76   1      }
+  77          
+  78          void lcdcmd0(uc cmd)  //写命令
+  79          {
+  80   1      cd=1;
+  81   1      wr=0;
+  82   1      d=cmd;
+  83   1      wr=1;
+  84   1      }
+  85          
+  86          void lcdcmd1(uc dat1,uc cmd)  //写带有一个参数的命令
+  87          {
+  88   1      lcddatw(dat1);
+  89   1      lcdcmd0(cmd);
+  90   1      }
+  91          
+  92          void lcdcmd2(uc dat1,uc dat2,uc cmd)  //写带有两个参数的命令
+  93          {
+  94   1      lcddatw(dat1);
+  95   1      lcddatw(dat2);
+  96   1      lcdcmd0(cmd);
+  97   1      }
+  98          
+  99          void lcdinit()     //LCD初始化
+ 100          {
+ 101   1      lcdcmd2(0x00,0x10,0x40); //设置文本显示区首地址
+ 102   1      lcdcmd2(30,0x00,0x41); //设置文本显示区宽度
+ 103   1      lcdcmd2(0x00,0x00,0x42); //设置图形显示区首地址
+ 104   1      lcdcmd2(30,0x00,0x43); //设置图形显示区宽度
+ 105   1      lcdcmd0(0xa2); //设置光标形状
+ 106   1      lcdcmd0(0x80); //设置显示方式，文本图形“或”
+ 107   1      lcdcmd0(0x9e); //设置光标闪烁，不显示，文本与图形显示
+ 108   1      }
+ 109          
+ 110          void dischar(uc row,uc col,uc cha) //写ASCII码字符，row字符行（=8图形行），col字符列（=8图形列），chaASCII
+             -码
+ 111          {  //显示ASCII码时，16行x30列
+ 112   1      ui address;
+ 113   1      uc dat1,dat2;
+ 114   1      address=row*30+col+0x1000; //计算文本显示区地址
+ 115   1      dat1=address;
+C51 COMPILER V9.60.0.0   LM3229                                                            05/15/2021 00:24:16 PAGE 3   
+
+ 116   1      dat2=address>>8;
+ 117   1      lcdcmd2(dat1,dat2,0x24);//地址指针定位
+ 118   1      lcdcmd1(cha,0xc4); //写字符，地址指针不变
+ 119   1      }
+ 120          
+ 121          //数字和汉字代码写入自定义字符存储区
+ 122          void setcgram(uc count)  //count是要写的汉字个数
+ 123          {//定义自定义字符在GCRAM中存储区地址，自定义字符首地址0x80（固定值），一个字符8x8=8字节，对应字节地址0x040
+             -0
+ 124   1      ui i;
+ 125   1      lcdcmd2(0x03,0x00,0x22); //定义自定义字符（在GCRAM中）存储区字节地址高5位为0x03，
+ 126   1      lcdcmd2(0x00,0x1c,0x24); //0x03<<11+0x0400=0x1c00（字节地址）
+ 127   1      for(i=0;i<16*8*12/8;i++)
+ 128   1      lcdcmd1(shucode[i],0xc0); //写数字（每个16*8）*12（0-9,:）到GCRAM
+ 129   1      for(i=0;i<16*16*count/8;i++)
+ 130   1      lcdcmd1(hancode[i],0xc0);  //写汉字（每个16*16）*count到GCRAM
+ 131   1      }
+ 132             //写汉字代码，row行，col列，sit汉字在自定义字符中的位置,每个汉字相当于4个字符(2行2列)
+ 133          void dishan(uc row,uc col,uc sit)//   sit位置用han[]描述
+ 134          {
+ 135   1      dischar(row,col,sit);//每个汉字按左上，左下，右上，右下存放
+ 136   1      dischar(row+1,col,sit+1);
+ 137   1      dischar(row,col+1,sit+2);
+ 138   1      dischar(row+1,col+1,sit+3);
+ 139   1      }
+ 140           //写数字代码，row行，col列，sit数字在自定义字符中的位置,每个数字相当于2个字符(2行1列)
+ 141          void disshu(uc row,uc col,uc sit)// sit位置用shu[]描述
+ 142          {
+ 143   1      dischar(row,col,sit);//每个汉字按左上，左下，右上，右下存放
+ 144   1      dischar(row+1,col,sit+1);
+ 145   1      }
+ 146          
+ 147          void updata()//刷新回原来的坐标
+ 148          {
+ 149   1          uc i,j;
+ 150   1        for(i=0;i<8;i++)
+ 151   1        for(j=0;j<10;j++)
+ 152   1        {
+ 153   2          //dishan(2*i,2*j,han[map[guan-1][i][j]]);
+ 154   2          rammap[i][j]=map[guan-1][i][j];//
+ 155   2          //if(rammap[i][j]==0x07) rammap[i][j]=0x00;
+ 156   2        }
+ 157   1      }
+ 158          void disjiemian0()//开始界面
+ 159          {
+ 160   1        dishan(0,6,han[1]);
+ 161   1        dishan(0,8,han[12]);
+ 162   1        dishan(0,10,han[15]);
+ 163   1        dishan(0,12,han[16]);
+ 164   1        /*dischar(2,10,'u');
+ 165   1        dischar(2,11,'p');
+ 166   1        dischar(4,2,'l');
+ 167   1        dischar(4,3,'e');
+ 168   1        dischar(4,4,'f');
+ 169   1        dischar(4,5,'t');
+ 170   1        dischar(4,15,'r');
+ 171   1        dischar(4,16,'i');
+ 172   1        dischar(4,17,'g');
+ 173   1        dischar(4,18,'h');
+ 174   1        dischar(4,19,'t');
+ 175   1        dischar(6,9,'d');
+ 176   1        dischar(6,10,'o');
+C51 COMPILER V9.60.0.0   LM3229                                                            05/15/2021 00:24:16 PAGE 4   
+
+ 177   1        dischar(6,11,'w');
+ 178   1        dischar(6,12,'n');*/
+ 179   1        dishan(4,22,han[9]);
+ 180   1        disshu(4,24,shu[0]);
+ 181   1        disshu(4,25,shu[guan]);
+ 182   1        dishan(4,26,han[10]);
+ 183   1        //disxg();
+ 184   1        
+ 185   1      }
+ 186          
+ 187          void HP1()    //显示血量
+ 188          {
+ 189   1        uc b1=0,b2=0,b3=0;
+ 190   1        if(hp>999)  {b1=9;b2=9;b3=9;}
+ 191   1        else {b1=hp/100%10;b2=hp/10%10;b3=hp%10%10;}
+ 192   1        disshu(12,23,shu[b1]);disshu(12,24,shu[b2]);disshu(12,25,shu[b3]);
+ 193   1        dishan(12,21,han[17]);
+ 194   1      }
+ 195          void Money1()//显示金钱
+ 196          {
+ 197   1        uc b1=0,b2=0,b3=0;
+ 198   1        if(money>999)  {b1=9;b2=9;b3=9;}
+ 199   1        else {b1=money/100%10;b2=money/10%10;b3=money%10%10;}
+ 200   1        disshu(10,23,shu[b1]);disshu(10,24,shu[b2]);disshu(10,25,shu[b3]);
+ 201   1        dishan(10,21,han[18]);
+ 202   1      }
+ 203          void dismess()
+ 204          {
+ 205   1        HP1();
+ 206   1        Money1();
+ 207   1      }
+ 208          
+ 209          GUAI guai1(GUAI guai)
+ 210          {
+ 211   1        guai.x=0;
+ 212   1        guai.y=2;
+ 213   1        guai.guaihp=10;
+ 214   1        guai.type=12;
+ 215   1        //dishan(guai.x*2,guai.y*2,han[guai.type]);
+ 216   1        return guai;
+ 217   1      }
+ 218          void deleteguai(GUAI guai[],uc i)
+ 219          {
+ 220   1        GUAI temp;
+ 221   1        for(i=i;i<9;i++)
+ 222   1        {
+ 223   2          temp=guai[i];
+ 224   2          guai[i]=guai[i+1];
+ 225   2          guai[i+1]=temp;
+ 226   2        }
+ 227   1      
+ 228   1      }
+ 229          void huaguai(GUAI guai[])//显示出怪
+ 230          {
+ 231   1        uc i=0;
+ 232   1        for(i=0;i<Count1;i++)
+ 233   1        {
+ 234   2          dishan(guai[i].x*2,guai[i].y*2,han[0]);
+ 235   2          dishan(guai[i].x*2,guai[i].y*2,han[guai[i].type]);
+ 236   2        }
+ 237   1      }
+ 238          void guaidong(GUAI guai[])
+C51 COMPILER V9.60.0.0   LM3229                                                            05/15/2021 00:24:16 PAGE 5   
+
+ 239          {
+ 240   1        uc x,y,type,i=0,k=0,l=0;
+ 241   1        while(i<Count1)
+ 242   1        {
+ 243   2          l++;
+ 244   2          x=guai[i].x;
+ 245   2          y=guai[i].y;
+ 246   2          type=guai[i].type;
+ 247   2          if(rammap[x][y]==0x08||guai[i].guaihp<=0) continue;//已到达人或者死了
+ 248   2          else 
+ 249   2          {
+ 250   3            if(l%2==0)//攻击频率为2 可改
+ 251   3            {
+ 252   4              for(k=0;k>TAcount;k++)
+ 253   4              {
+ 254   5                if(ta[k].fanwei<=(x-ta[k].x)^2+(y-ta[k].y)^2)//怪进入塔的攻击范围
+ 255   5                {
+ 256   6                  guai[i].guaihp-=ta[k].shanghai;//造成伤害
+ 257   6                  if(guai[i].guaihp<=0)
+ 258   6                  {
+ 259   7                    money+=8;//加钱
+ 260   7                    fenshu+=50;//加分
+ 261   7                    deleteguai(guai,i);//删除死怪
+ 262   7                    Count1--;
+ 263   7                  }
+ 264   6                }
+ 265   5              }
+ 266   4            }
+ 267   3            if(rammap[x+1][y]==0x00||rammap[x+1][y]==0x08)//怪的下面是空白，往下走
+ 268   3              {
+ 269   4                //dishan(x*2,y*2,han[0]);
+ 270   4                x++;
+ 271   4                //dishan(x*2,y*2,han[type]);
+ 272   4              }
+ 273   3              else if(rammap[x][y+1]==0x00||rammap[x][y+1]==0x08)//右
+ 274   3              {
+ 275   4                //dishan(x*2,y*2,han[0]);
+ 276   4                y++;
+ 277   4                //dishan(x*2,y*2,han[type]);
+ 278   4              }
+ 279   3              else if(rammap[x][y-1]==0x00||rammap[x][y-1]==0x08)
+ 280   3              {
+ 281   4                //dishan(x*2,y*2,han[0]);
+ 282   4                y--;
+ 283   4                //dishan(x*2,y*2,han[type]);
+ 284   4              }
+ 285   3            guai[i].x=x;
+ 286   3            guai[i].y=y;
+ 287   3              
+ 288   3            updata();//
+ 289   3            //dishan(12,18,han[8]);
+ 290   3            delay(10);
+ 291   3            if(rammap[guai[i].x][guai[i].y]==0x08) //移动到人时 造成伤害  
+ 292   3            {
+ 293   4              hp=hp-10;
+ 294   4              deleteguai(guai,i);//删除怪 不用i++
+ 295   4              Count1--;
+ 296   4            }
+ 297   3            else i++;
+ 298   3            if(Count1==0) break;
+ 299   3          }
+ 300   2          
+C51 COMPILER V9.60.0.0   LM3229                                                            05/15/2021 00:24:16 PAGE 6   
+
+ 301   2        }
+ 302   1        
+ 303   1      }
+ 304          
+ 305          void huata()
+ 306          {
+ 307   1      
+ 308   1        uc i=0;
+ 309   1        for(i=0;i<TAcount;i++)
+ 310   1        {
+ 311   2          dishan(ta[i].x*2,ta[i].y*2,han[ta[i].type]);
+ 312   2        }
+ 313   1        
+ 314   1      } 
+ 315          
+ 316          void huamap()   //画关卡地图
+ 317          {
+ 318   1        uc i,j;
+ 319   1        clear();
+ 320   1        for(i=0;i<8;i++)
+ 321   1          for(j=0;j<10;j++)
+ 322   1          {
+ 323   2            dishan(2*i,2*j,han[map[guan-1][i][j]]);
+ 324   2            rammap[i][j]=map[guan-1][i][j];
+ 325   2            //if(rammap[i][j]==0x07) rammap[i][j]=0x00;
+ 326   2          }
+ 327   1        dismess();//显示游戏信息
+ 328   1        dishan(renh*2,renl*2,han[11]);
+ 329   1      }
+ 330          
+ 331          
+ 332          void disxg()       //显示选关提示
+ 333          {
+ 334   1      dishan(0,22,han[19]);
+ 335   1      dishan(0,24,han[20]);
+ 336   1      dishan(0,26,han[10]);
+ 337   1      disshu(0,28,shu[10]);
+ 338   1      }
+ 339          
+ 340          void shengli()       //过关判断
+ 341          {
+ 342   1        if(Count1==0&&hp>0)//没怪了 基地还有血
+ 343   1        {
+ 344   2          startf=2;//结束
+ 345   2          fenshu=hp+money+1000+fenshu;
+ 346   2        }
+ 347   1        else if(hp<=0)
+ 348   1        {
+ 349   2          startf=2;//结束
+ 350   2          fenshu=hp+money+500+fenshu;
+ 351   2        }
+ 352   1      }
+ 353          void disfenshu()//任务三 实时显示分数
+ 354          {
+ 355   1        DigDisplay(fenshu);
+ 356   1      }
+ 357          
+ 358          uc key()       //检测按键
+ 359          {
+ 360   1        uc x,k=0;
+ 361   1        P1=0Xff;
+ 362   1        x=P1;
+C51 COMPILER V9.60.0.0   LM3229                                                            05/15/2021 00:24:16 PAGE 7   
+
+ 363   1        if(x==0xff)    //没按键跳出
+ 364   1        return k;
+ 365   1        else
+ 366   1        {
+ 367   2          delay(0);    //有按键，延时
+ 368   2          P1=0xff;
+ 369   2          x=P1;
+ 370   2          if(x==0xff)   //再测
+ 371   2          k=0;
+ 372   2          else
+ 373   2          {
+ 374   3            switch(x)    //获取键值
+ 375   3            {
+ 376   4              case 0xfe:k=1;break;
+ 377   4              case 0xfd:k=2;break;
+ 378   4              case 0xfb:k=3;break;
+ 379   4              case 0xf7:k=4;break;
+ 380   4              case 0xef:k=5;break;
+ 381   4              case 0xdf:k=6;break;
+ 382   4              case 0xbf:k=7;break;
+ 383   4              case 0x7f:k=8;break;
+ 384   4              default:break;
+ 385   4            }
+ 386   3            wait:    //等待按键释放
+ 387   3            P1=0xff;
+ 388   3            x=P1;
+ 389   3            if(x==0xff) return k;
+ 390   3            else goto wait;
+ 391   3          }
+ 392   2        }
+ 393   1        return k;
+ 394   1      }
+ 395          
+ 396          
+ 397          void xuanguan(uc k)    //选关处理
+ 398          {
+ 399   1         if((k==1||k==3)&&guan<5) {guan++;renh=0;renl=1;/*disjiemian0();*/}//五关
+ 400   1         if((k==2||k==4)&&guan>1) {guan--;renh=0;renl=1;/*disjiemian0();*/}
+ 401   1      }
+ 402          
+ 403          void huifumubiao()    //恢复目标显示（踩的目标）
+ 404          {
+ 405   1      uc i,j;
+ 406   1      for(i=0;i<8;i++)
+ 407   1      for(j=0;j<10;j++)
+ 408   1      {
+ 409   2        if(map[guan-1][i][j]!=0x00&&rammap[i][j]==0x00)   //变空白且不是空白
+ 410   2        {
+ 411   3          //if(renh!=i||renl!=j) 
+ 412   3          
+ 413   3          
+ 414   3          dishan(2*i,2*j,han[map[guan-1][i][j]]);
+ 415   3        }
+ 416   2      } 
+ 417   1      }
+ 418          
+ 419          void game(uc k)     //游戏控制
+ 420          {
+ 421   1        
+ 422   1       if(k==1)     //向上
+ 423   1        {
+ 424   2          if(renh-1>=0)
+C51 COMPILER V9.60.0.0   LM3229                                                            05/15/2021 00:24:16 PAGE 8   
+
+ 425   2          {
+ 426   3            if(rammap[renh-1][renl]!=0x00)       //上面不是空白
+ 427   3            {
+ 428   4              dishan(renh*2,renl*2,han[0]);       //人原来的位置清0
+ 429   4              rammap[renh][renl]=0x00;
+ 430   4              renh--;               //上移一行
+ 431   4              dishan(renh*2,renl*2,han[11]);    //人新位置显示
+ 432   4            }
+ 433   3            else //上面是空白 上面的上面不是空白
+ 434   3            {
+ 435   4              if(rammap[renh-2][renl]!=0x00)
+ 436   4              {
+ 437   5                dishan(renh*2,renl*2,han[0]);       //人原来的位置清0
+ 438   5                rammap[renh][renl]=0x00;
+ 439   5                renh--;//上移一行
+ 440   5                renh--;//上移一行
+ 441   5                dishan(renh*2,renl*2,han[11]);
+ 442   5              }
+ 443   4            }
+ 444   3          }
+ 445   2        }
+ 446   1        if(k==4)
+ 447   1        {
+ 448   2          if(renh+1<=8)
+ 449   2          {
+ 450   3            if(rammap[renh+1][renl]!=0x00) 
+ 451   3            {
+ 452   4              dishan(renh*2,renl*2,han[0]);
+ 453   4              rammap[renh][renl]=0x00;
+ 454   4              renh++;
+ 455   4              dishan(renh*2,renl*2,han[11]);
+ 456   4              
+ 457   4            }
+ 458   3          
+ 459   3            else //上面是空白 上面的上面不是空白
+ 460   3            {
+ 461   4              if(rammap[renh+2][renl]!=0x00)
+ 462   4              {
+ 463   5                dishan(renh*2,renl*2,han[0]);       //光标原来的位置清0
+ 464   5                rammap[renh][renl]=0x00;
+ 465   5                renh++;//下移一行
+ 466   5                renh++;//下移一行
+ 467   5                dishan(renh*2,renl*2,han[11]);
+ 468   5              }
+ 469   4            }
+ 470   3          }
+ 471   2        }
+ 472   1          if(k==2)
+ 473   1        {
+ 474   2          if(renl-1>=0)
+ 475   2          {
+ 476   3            if(rammap[renh][renl-1]!=0x00) 
+ 477   3            {
+ 478   4              dishan(renh*2,renl*2,han[0]);
+ 479   4              rammap[renh][renl]=0x00;
+ 480   4              renl--;
+ 481   4              dishan(renh*2,renl*2,han[11]);
+ 482   4            }
+ 483   3          else //左面是空白 z面的z面不是空白
+ 484   3            {
+ 485   4              if(rammap[renh][renl-2]!=0x00)
+ 486   4              {
+C51 COMPILER V9.60.0.0   LM3229                                                            05/15/2021 00:24:16 PAGE 9   
+
+ 487   5                dishan(renh*2,renl*2,han[0]);       //人原来的位置清0
+ 488   5                rammap[renh][renl]=0x00;
+ 489   5                renl--;//左移一列
+ 490   5                renl--;//左移一列
+ 491   5                dishan(renh*2,renl*2,han[11]);
+ 492   5              }
+ 493   4            }
+ 494   3          }
+ 495   2        }
+ 496   1          if(k==3)
+ 497   1        {
+ 498   2          if(renl+1<=10)
+ 499   2          {
+ 500   3            if(rammap[renh][renl+1]!=0x00) 
+ 501   3            {
+ 502   4              dishan(renh*2,renl*2,han[0]);
+ 503   4              rammap[renh][renl]=0x00;
+ 504   4              renl++;
+ 505   4              dishan(renh*2,renl*2,han[11]);
+ 506   4            }
+ 507   3          else //y面是空白 y面的y面不是空白
+ 508   3            {
+ 509   4              if(rammap[renh][renl+2]!=0x00)
+ 510   4              {
+ 511   5                dishan(renh*2,renl*2,han[0]);       //人原来的位置清0
+ 512   5                rammap[renh][renl]=0x00;
+ 513   5                renl++;//右移一列
+ 514   5                renl++;//右移一列
+ 515   5                dishan(renh*2,renl*2,han[11]);
+ 516   5              }
+ 517   4            }
+ 518   3          }
+ 519   2        }
+ 520   1      }
+ 521          void disguangbiao()
+ 522          {
+ 523   1        dishan(renh*2,renl*2,han[11]);
+ 524   1      }
+ 525          void clear()  //清屏
+ 526          {
+ 527   1        uc i,j;
+ 528   1      for(i=0;i<8;i++)
+ 529   1      for(j=0;j<15;j++)
+ 530   1      {
+ 531   2        dishan(2*i,2*j,han[0]);  //写0
+ 532   2      }
+ 533   1      }
+ 534          
+ 535          void keychuli(uc  k)    //按键处理
+ 536          {
+ 537   1        if(k==6)  
+ 538   1        {
+ 539   2          startf=4;
+ 540   2          disxg();
+ 541   2        }   //键值为6，“选关”
+ 542   1        else if(k==7) 
+ 543   1        {
+ 544   2          clear();
+ 545   2          startf=1;
+ 546   2          hp=100;
+ 547   2          money=50;
+ 548   2          renl=1;
+C51 COMPILER V9.60.0.0   LM3229                                                            05/15/2021 00:24:16 PAGE 10  
+
+ 549   2          renh=0;
+ 550   2          Count1=10;
+ 551   2          count=0;
+ 552   2          huamap();
+ 553   2         }  //键值为7，“开始”
+ 554   1        else if(k==8)//暂停
+ 555   1        {
+ 556   2          if(startf==1) startf=0;
+ 557   2          else startf=1;
+ 558   2          
+ 559   2        }
+ 560   1        else if(k==5)//建塔/确定
+ 561   1        {
+ 562   2          if(startf==1)//游戏进行中
+ 563   2          {
+ 564   3            if(rammap[renh][renl]!=0x00)//确认光标
+ 565   3            {
+ 566   4              if(money>=50)
+ 567   4              ta[TAcount].x=renh;
+ 568   4              ta[TAcount].y=renl;
+ 569   4              ta[TAcount].type=21;
+ 570   4              ta[TAcount].fanwei=sqrt(2);
+ 571   4              ta[TAcount].shanghai=5;
+ 572   4              ta[TAcount].pinshu=2;
+ 573   4              TAcount++;//塔数加一
+ 574   4              money-=50;;//扣钱
+ 575   4            }
+ 576   3          }
+ 577   2          else//确认选项
+ 578   2          {
+ 579   3            
+ 580   3            
+ 581   3          }
+ 582   2        }
+ 583   1        else if(k<5)
+ 584   1        {
+ 585   2          if(startf==4||startf==3)  xuanguan(k);  //选关处理
+ 586   2          else  if(startf==1)   
+ 587   2          {
+ 588   3            //LED=~LED;
+ 589   3            game(k);    //游戏控制
+ 590   3            //huifumubiao();//恢复踩过的图案
+ 591   3            updata();//刷新为原坐标
+ 592   3          }
+ 593   2        }
+ 594   1        else
+ 595   1        {
+ 596   2          
+ 597   2          return;
+ 598   2        }
+ 599   1      }
+ 600          // 串口中断处理函数 （串口接收到数据，发送数据完毕都可以引起串口中断）
+ 601          /*void uart_interrupt(void) interrupt 4     //也叫串行中断服务程序
+ 602          {
+ 603             /*接收数据(1字节)完毕，RI会被硬件置1
+ 604              RI = 0;               // 将接收中断标志位 清零(让串口可以继续接收数据)
+ 605              receiveData = SBUF;       //读取接收到的数据，并存放到data
+ 606              LED=0;
+ 607              delay(1000);
+ 608              flag=1;*/
+ 609              /*RI=0;
+ 610              IIC_start();
+C51 COMPILER V9.60.0.0   LM3229                                                            05/15/2021 00:24:16 PAGE 11  
+
+ 611          IIC_read_byte();
+ 612              IIC_stop();
+ 613            
+ 614          }*/
+ 615          /*void main()
+ 616          {
+ 617            uc i=0,ch=0;
+ 618            GUAI idata guai[10];
+ 619            lcdinit();
+ 620            //IIC_Init();
+ 621            //UART_init();
+ 622            setcgram(24);  //写入汉字
+ 623            disjiemian0();
+ 624            delay(500);
+ 625            huamap();
+ 626            while(1)
+ 627            { 
+ 628              if(i<10)
+ 629              {
+ 630                guai[i]=guai1(guai[i]);
+ 631                i++;
+ 632              }
+ 633              guaidong(guai);//让怪走起来
+ 634              dismess();
+ 635              //IIC_start();
+ 636              //ch=IIC_read_byte();
+ 637              //IIC_stop();
+ 638              keychuli(key());
+ 639              delay(1500);
+ 640              
+ 641            }
+ 642          }
+ 643          */
+ 644          
+ 645          
+ 646          void task_1(void) _task_ 1    // 怪坐标变化
+ 647          {
+ 648   1        GUAI  guai[10];
+ 649   1        while(1)
+ 650   1        {
+ 651   2        if(startf==1)
+ 652   2        {
+ 653   3          clear();
+ 654   3          huamap();
+ 655   3          dismess();
+ 656   3          disguangbiao();
+ 657   3          if(count<10)
+ 658   3          {
+ 659   4            guai[count]=guai1(guai[count]);
+ 660   4            count++;
+ 661   4          }
+ 662   3          huaguai(guai);//先画 还是先动？
+ 663   3          guaidong(guai);//让怪走起来
+ 664   3          huata();
+ 665   3          os_wait2(K_IVL,1000);
+ 666   3          shengli();
+ 667   3        } 
+ 668   2        else if(startf==2)//游戏结束
+ 669   2        {
+ 670   3          disxg();
+ 671   3        }
+ 672   2        else if(startf==3)//启动界面
+C51 COMPILER V9.60.0.0   LM3229                                                            05/15/2021 00:24:16 PAGE 12  
+
+ 673   2        {
+ 674   3          disjiemian0();
+ 675   3        }
+ 676   2        else if(startf==0)//游戏暂停
+ 677   2        {
+ 678   3          return;
+ 679   3        }
+ 680   2        else if(startf==4)
+ 681   2        {
+ 682   3          disxg();
+ 683   3        }
+ 684   2      }
+ 685   1      }
+ 686          void task_2(void) _task_ 2  //按键处理  光标变换
+ 687          {
+ 688   1        uc ch;
+ 689   1        while(1)
+ 690   1        {
+ 691   2          
+ 692   2          /*ch=IIC_single_byte_read(AT24C02_ADDR,255);
+ 693   2          if(ch!=0&&ch<=6)  keychuli(ch);
+ 694   2          os_wait2(K_IVL,1000);*/
+ 695   2          
+ 696   2          
+ 697   2          ch=key();
+ 698   2          if(ch!=0)
+ 699   2          keychuli(ch);
+ 700   2          os_wait2(K_IVL,100);
+ 701   2        }   
+ 702   1      }
+ 703          
+ 704          void task_3(void) _task_ 3   //实时显示分数
+ 705          {
+ 706   1        while(1)
+ 707   1        {
+ 708   2          
+ 709   2          
+ 710   2        }
+ 711   1        
+ 712   1      }
+ 713          void task_4(void) _task_ 4//播放音乐
+ 714          {
+ 715   1        while(1)
+ 716   1        {
+ 717   2          //if(startf==1)
+ 718   2          if(tone!=0)play_tone(tone);  //一直在播放音调，播放的音调由定时器切换，
+ 719   2                         //音调时常由定时器决定
+ 720   2        }                  //如果tone==0 不进入播放
+ 721   1      }
+ 722          /*******************************************************************************
+ 723          * 函 数 名       : task_create
+ 724          * 函数功能       : 任务0
+ 725          * 输    入       : 无
+ 726          * 输    出       : 无
+ 727          *******************************************************************************/
+ 728          void task_create(void) _task_ 0
+ 729          {
+ 730   1        
+ 731   1        lcdinit();
+ 732   1        time_init();  
+ 733   1        //IIC_Init();
+ 734   1        //UART_init();
+C51 COMPILER V9.60.0.0   LM3229                                                            05/15/2021 00:24:16 PAGE 13  
+
+ 735   1        setcgram(22);  //写入汉字
+ 736   1        huamap();
+ 737   1        //os_create_task(2);
+ 738   1        //os_create_task(1);
+ 739   1        os_create_task(4);
+ 740   1        os_delete_task(0);//挂起任务0
+ 741   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   3631    ----
+   CONSTANT SIZE    =   1410    ----
+   XDATA SIZE       =   ----       4
+   PDATA SIZE       =     12      80
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =    110    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

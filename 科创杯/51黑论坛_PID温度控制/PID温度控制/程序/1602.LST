@@ -1,0 +1,89 @@
+C51 COMPILER V9.00   1602                                                                  05/19/2020 13:09:37 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE 1602
+OBJECT MODULE PLACED IN 1602.OBJ
+COMPILER INVOKED BY: D:\软件\keil+uvision4破解版下载\C51\BIN\C51.EXE 1602.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include<reg52.h>
+   2          #define uint unsigned int 
+   3          #define uchar unsigned char
+   4          
+   5          sbit rs=P2^6;
+   6          sbit rw=P2^5;
+   7          sbit en=P2^7;
+   8          
+   9          uchar code t1[]={"Thermometer:     "};
+  10          uchar code t2[]={"Temp Now:   .  C "};
+  11          void delay(uint ms)
+  12          {
+  13   1       uint i,j;
+  14   1       for(i=ms;i>0;i--)
+  15   1       for(j=110;j>0;j--);
+  16   1      }
+  17          
+  18          void writelcd_cmd(uchar cmd)//向1602液晶显示器里写入命令的函数
+  19          {
+  20   1      en=0;
+  21   1      rs=0;
+  22   1      rw=0;
+  23   1      delay(1);
+  24   1      P0=cmd;
+  25   1      en=1;
+  26   1      delay(1);
+  27   1      en=0;
+  28   1      }
+  29          
+  30          void writelcd_dat(uchar dat)//向1602液晶显示器里写入数据的函数
+  31          {
+  32   1      en=0;
+  33   1      rs=1;
+  34   1      rw=0;
+  35   1      delay(1);
+  36   1      P0=dat;
+  37   1      en=1;
+  38   1      delay(1);
+  39   1      en=0;
+  40   1      }
+  41          
+  42          void lcd_init()  //初始化1602液晶显示器的函数
+  43          {
+  44   1      uchar i,j;
+  45   1      writelcd_cmd(0x38);
+  46   1      delay(5);
+  47   1      writelcd_cmd(0x38);
+  48   1      delay(5);
+  49   1      writelcd_cmd(0x38);
+  50   1      writelcd_cmd(0x08);
+  51   1      writelcd_cmd(0x01);
+  52   1      writelcd_cmd(0x06);
+  53   1      writelcd_cmd(0x0c);
+  54   1      writelcd_cmd(0x80);
+  55   1      for(i=0;i<16;i++)
+C51 COMPILER V9.00   1602                                                                  05/19/2020 13:09:37 PAGE 2   
+
+  56   1      {
+  57   2      writelcd_dat(t1[i]);
+  58   2      }
+  59   1      writelcd_cmd(0xc0);
+  60   1      for(j=0;j<16;j++)
+  61   1      {
+  62   2      writelcd_dat(t2[j]);
+  63   2      }
+  64   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    152    ----
+   CONSTANT SIZE    =     36    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,10 @@
+".\Objects\main.obj",
+".\Objects\ultrasonic_wave.obj",
+".\Objects\oled.obj",
+".\Objects\ds18b20.obj",
+".\Objects\Conf_tny.obj",
+"..\TINY\RTX51TNY.LIB" 
+TO ".\Objects\temp_show" 
+Rtx51Tiny 
+PRINT(".\Listings\temp_show.map") DISABLEWARNING (15) 
+REMOVEUNUSED 

@@ -1,0 +1,150 @@
+C51 COMPILER V9.60.0.0   IIC                                                               05/13/2021 21:44:25 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE IIC
+OBJECT MODULE PLACED IN iic.OBJ
+COMPILER INVOKED BY: D:\Keil_v5\44444444444\C51\BIN\C51.EXE iic.c COMPACT OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND TA
+                    -BS(2)
+
+line level    source
+
+   1          #include <reg52.h>
+   2          #include <iic.h>
+   3          
+   4          sbit IIC_SDA=P3^5;        //声明IIC总线的数据线接在单片机的P2.6端口。
+   5          sbit IIC_SCL=P3^6;        //声明IIC总线的时钟线接在单片机的P2.5端口。
+   6          
+   7          
+   8          //void delay(unsigned int t)
+   9          //{//延时函数
+  10          //    while(t){t--;};                    //延时循环计数
+  11          //}
+  12          //-------------------------------------------------------------------
+  13          void delay_IIC(void)    
+  14          {//IIC总线限速延时函数。
+  15   1      //该函数是空函数，延时4个机器周期。
+  16   1        ;
+  17   1        ;
+  18   1      }
+  19          //-------------------------------------------------------------------
+  20          void IIC_Init(void)
+  21          {//IIC总线初始化函数
+  22   1          IIC_SDA=1;//释放IIC总线的数据线。
+  23   1          IIC_SCL=1;//释放IIC总线的时钟线。
+  24   1      }
+  25          //-------------------------------------------------------------------
+  26          void IIC_start(void)
+  27          {//IIC总线产生起始信号函数  
+  28   1         IIC_SDA=1;//拉高数据线
+  29   1         IIC_SCL=1;//拉高时钟线
+  30   1         delay_IIC();
+  31   1         IIC_SDA=0;//在时钟线为高电平时，拉低数据线，产生起始信号。
+  32   1         delay_IIC();
+  33   1         IIC_SCL=0;//拉低时钟线
+  34   1      }
+  35          //-------------------------------------------------------------------
+  36          void IIC_stop(void) 
+  37          {//IIC总线产生停止信号函数
+  38   1          IIC_SDA=0;//拉低数据线
+  39   1          delay_IIC();
+  40   1          IIC_SCL=1;//拉高时钟线。
+  41   1          delay_IIC();
+  42   1          IIC_SDA=1;//时钟时线为高电平时，拉高数据线，产生停止信号。
+  43   1          delay_IIC();
+  44   1      }
+  45          //-------------------------------------------------------------------
+  46          bit IIC_Tack(void)
+  47          {//接收应答信号函数
+  48   1          bit ack;//定义一个位变量，来暂存应答状态。
+  49   1          IIC_SDA=1;//释放数据总线，准备接收应答信号。
+  50   1          delay_IIC();
+  51   1          IIC_SCL=1;//拉高时钟线。
+  52   1          delay_IIC();
+  53   1          ack=IIC_SDA;//读取应答信号的状态。
+  54   1          delay_IIC();
+C51 COMPILER V9.60.0.0   IIC                                                               05/13/2021 21:44:25 PAGE 2   
+
+  55   1          IIC_SCL=0;//拉低时钟线。
+  56   1          delay_IIC();
+  57   1          return ack;//返回应答信号的状态，0表示应答，1表示非应答。
+  58   1      }
+  59          //-------------------------------------------------------------------
+  60          void IIC_write_byte(unsigned char Data)
+  61          {//向IIC总线写入一个字节的数据函数 
+  62   1        unsigned char i;
+  63   1         for(i=0;i<8;i++)//有8位数据
+  64   1        {
+  65   2            IIC_SDA=Data&0x80;//写最高位的数据
+  66   2            delay_IIC();
+  67   2            IIC_SCL=1; //拉高时钟线，将数写入到设备中。
+  68   2            delay_IIC();
+  69   2            IIC_SCL=0;//拉低时钟线，允许改变数据线的状态
+  70   2            delay_IIC();
+  71   2            Data=Data<<1;//数据左移一位，把次高位放在最高位,为写入次高位做准备
+  72   2        }
+  73   1      }
+  74          //-------------------------------------------------------------------
+  75          unsigned char IIC_read_byte()
+  76          {//从IIC总线读取一个字节的数据函数
+  77   1          unsigned char i;
+  78   1          unsigned char Data;       //定义一个缓冲寄存器。
+  79   1          for(i=0;i<8;i++)//有8位数据
+  80   1          {
+  81   2              IIC_SCL=1;//拉高时钟线，为读取下一位数据做准备。
+  82   2              delay_IIC();
+  83   2              Data=Data<<1;//将缓冲字节的数据左移一位，准备读取数据。
+  84   2              delay_IIC();
+  85   2              
+  86   2              if(IIC_SDA)//如果数据线为高平电平。
+  87   2                  Data=Data|0x1;//则给缓冲字节的最低位写1。
+  88   2              IIC_SCL=0;//拉低时钟线，为读取下一位数据做准备。
+  89   2              delay_IIC();
+  90   2          }
+  91   1          return Data;//返回读取的一个字节数据。
+  92   1      }
+  93          void IIC_single_byte_write(unsigned char Daddr,unsigned char Waddr,unsigned char Data)
+  94          {//向任意地址写入一个字节数据函数
+  95   1          IIC_start();//产生起始信号
+  96   1          IIC_write_byte(Daddr);//写入设备地址（写）
+  97   1          IIC_Tack();//等待设备的应答
+  98   1          IIC_write_byte(Waddr);//写入要操作的单元地址。
+  99   1          IIC_Tack();//等待设备的应答。
+ 100   1          IIC_write_byte(Data);//写入数据。
+ 101   1          IIC_Tack();//等待设备的应答。
+ 102   1          IIC_stop();//产生停止符号。
+ 103   1      }
+ 104          //-------------------------------------------------------------------
+ 105          unsigned char IIC_single_byte_read(unsigned char Daddr,unsigned char Waddr)
+ 106          {//从任意地址读取一个字节数据函数
+ 107   1          unsigned char Data;//定义一个缓冲寄存器。
+ 108   1      
+ 109   1          IIC_start();//产生起始信号
+ 110   1          IIC_write_byte(Daddr);//写入设备地址（写）
+ 111   1          IIC_Tack();//等待设备的应答
+ 112   1          IIC_write_byte(Waddr);//写入要操作的单元地址。
+ 113   1          IIC_Tack();//等待设备的应答。
+ 114   1          
+ 115   1          IIC_start();//产生起始信号
+ 116   1          IIC_write_byte(Daddr+1);//写入设备地址（读）。
+C51 COMPILER V9.60.0.0   IIC                                                               05/13/2021 21:44:25 PAGE 3   
+
+ 117   1          IIC_Tack();//等待设备的应答。 
+ 118   1          Data=IIC_read_byte();//写入数据。
+ 119   1          IIC_stop();//产生停止符号。
+ 120   1          //-------------------返回读取的数据--------------------
+ 121   1          return Data;//返回读取的一个字节数据。
+ 122   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    186    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----       1
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

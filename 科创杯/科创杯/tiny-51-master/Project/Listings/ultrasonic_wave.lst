@@ -1,0 +1,102 @@
+C51 COMPILER V9.60.0.0   ULTRASONIC_WAVE                                                   12/25/2021 04:56:28 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE ULTRASONIC_WAVE
+OBJECT MODULE PLACED IN .\Objects\ultrasonic_wave.obj
+COMPILER INVOKED BY: D:\Keil_v5\44444444444\C51\BIN\C51.EXE ..\HARDWARE\CHAO\ultrasonic_wave.c OMF2 OPTIMIZE(9,SPEED) BR
+                    -OWSE INCDIR(..\HARDWARE\OLED;..\Project;..\TINY;..\HARDWARE\CHAO;..\HARDWARE\DS18B20) DEBUG PRINT(.\Listings\ultrasonic_
+                    -wave.lst) TABS(2) OBJECT(.\Objects\ultrasonic_wave.obj)
+
+line level    source
+
+   1          #include "ultrasonic_wave.h"//超声波头函数
+   2          
+   3          
+   4          //超声波初始化
+   5          void Init_ultrasonic_wave()
+   6          {
+   7   1         TX1 = 0;        //关闭发射
+   8   1         TX2 = 0;         
+   9   1         TX3 = 0;
+  10   1         TX4 = 0;
+  11   1         TX5 = 0;
+  12   1         TX6 = 0;
+  13   1         TX7 = 0;
+  14   1        //关闭发射
+  15   1      }
+  16          
+  17          //启动超声波
+  18          void StartModule1()   //启动模块
+  19          {
+  20   1        TX1=1;            //启动一次模块
+  21   1        os_wait2(K_TMO,1);
+  22   1        TX1=0;
+  23   1      }
+  24          //启动超声波
+  25          void StartModule2()   //启动模块
+  26          {
+  27   1        TX2=1;            //启动一次模块
+  28   1        os_wait2(K_TMO,1);
+  29   1        TX2=0;
+  30   1      }
+  31          //启动超声波
+  32          void StartModule3()   //启动模块
+  33          {
+  34   1        TX3=1;            //启动一次模块
+  35   1        os_wait2(K_TMO,1);
+  36   1        TX3=0;
+  37   1      }
+  38          //启动超声波
+  39          void StartModule4()   //启动模块
+  40          {
+  41   1        TX4=1;            //启动一次模块
+  42   1        os_wait2(K_TMO,1);
+  43   1        TX4=0;
+  44   1      }
+  45          
+  46          
+  47          //启动超声波
+  48          void StartModule5()   //启动模块
+  49          {
+  50   1        TX5=1;            //启动一次模块
+  51   1        os_wait2(K_TMO,1);
+  52   1        TX5=0;
+  53   1      }
+C51 COMPILER V9.60.0.0   ULTRASONIC_WAVE                                                   12/25/2021 04:56:28 PAGE 2   
+
+  54          //启动超声波
+  55          void StartModule6()   //启动模块
+  56          {
+  57   1        TX6=1;            //启动一次模块
+  58   1        os_wait2(K_TMO,1);
+  59   1        TX6=0;
+  60   1      }
+  61          
+  62          
+  63          //启动超声波
+  64          void StartModule7()   //启动模块
+  65          {
+  66   1        TX7=1;            //启动一次模块
+  67   1        os_wait2(K_TMO,1);
+  68   1        TX7=0;
+  69   1      }
+  70          
+  71          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     99    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+   EDATA SIZE       =   ----    ----
+   HDATA SIZE       =   ----    ----
+   XDATA CONST SIZE =   ----    ----
+   FAR CONST SIZE   =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

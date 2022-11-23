@@ -1,0 +1,6 @@
+"STARTUP.obj",
+"1602.obj",
+"ds18b20.obj",
+"main.obj" 
+TO "数字温度传感器" 
+RAMSIZE(256) 

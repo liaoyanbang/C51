@@ -1,0 +1,102 @@
+C51 COMPILER V9.60.0.0   MAIN                                                              05/18/2021 15:21:08 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: D:\Keil_v5\44444444444\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\L
+                    -istings\main.lst) TABS(2) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include "reg52.h"
+   2          #include "iic.h"
+   3          #define u8 unsigned char
+   4          #define AT24C02_ADDR 0xa0
+   5          
+   6          extern unsigned char ACK_flag;
+   7          
+   8          sbit LED=P3^7;
+   9          u8 Keyscan(void);
+  10          void DelayMs(unsigned int ms); //毫秒
+  11          void UART_init()
+  12          {
+  13   1        //设置波特率9600
+  14   1        TMOD|=0x20;  //定时器1工作于自动重装载模式
+  15   1        TH1=0xfd;
+  16   1        TH0=0xfd;
+  17   1        TR1=1; //启动定时器1
+  18   1        SM0=0;
+  19   1        SM1=1;
+  20   1        EA=1;  //总中断允许
+  21   1        ES=1;//串口收发中断
+  22   1      }
+  23          void main()
+  24          {
+  25   1        I2C_init();     //初始化
+  26   1        /*  写入段  */
+  27   1        I2C_Write(0xa0,0x20,55);
+  28   1                  
+  29   1        delay(100);
+  30   1       
+  31   1        /*  读取段  */
+  32   1        P1 = I2C_Read(0xa0,0x20);
+  33   1        if(ACK_flag) P1 = 0x00;   //校验是否出现无应答
+  34   1        while(1);
+  35   1      }
+  36          u8 Keyscan(void)
+  37          {//定义局部变量
+  38   1        u8 x,k=0;
+  39   1        x=P2;
+  40   1        if(x==0xff)    //没按键跳出
+  41   1          return 0;
+  42   1        else
+  43   1        {
+  44   2          DelayMs(10);     //有按键，延时
+  45   2          P2=0xff;
+  46   2          x=P2;
+  47   2          if(x==0xff)   //再测
+  48   2            return 0;
+  49   2          else
+  50   2          {
+  51   3            switch(x)    //获取键值
+  52   3            {
+  53   4              case 0xfe:k=1;break;
+  54   4              case 0xfd:k=2;break;
+C51 COMPILER V9.60.0.0   MAIN                                                              05/18/2021 15:21:08 PAGE 2   
+
+  55   4              case 0xfb:k=3;break;
+  56   4              case 0xf7:k=4;break;
+  57   4              case 0xef:k=5;break;
+  58   4              case 0xdf:k=6;break;
+  59   4              case 0xbf:k=7;break;
+  60   4              case 0x7f:k=8;break;
+  61   4              default:break;
+  62   4            }
+  63   3            wait:    //等待按键释放
+  64   3            P2=0xff;
+  65   3            x=P2;
+  66   3            if(x==0xff)  return k;
+  67   3            else goto wait;
+  68   3          }
+  69   2        }
+  70   1      }
+  71          void DelayMs(unsigned int ms) //毫秒
+  72          { 
+  73   1          unsigned int i,j;
+  74   1          for(j=ms; j>0; j--) 
+  75   1            for(i=100;i>0;i--); 
+  76   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    205    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       2
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

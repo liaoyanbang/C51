@@ -1,0 +1,11 @@
+"LM3229.obj",
+"shuma.obj",
+"uart.obj",
+"led.obj",
+"delay.obj",
+"iic.obj",
+"music.obj",
+"Conf_tny.obj",
+".\RTX51TNY.LIB" 
+TO "LM3229" Rtx51Tiny 
+RAMSIZE(256) 

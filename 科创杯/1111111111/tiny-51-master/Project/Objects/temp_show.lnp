@@ -1,0 +1,14 @@
+".\Objects\main.obj",
+".\Objects\usart.obj",
+".\Objects\key.obj",
+".\Objects\AT24C02.obj",
+".\Objects\ADS1015.obj",
+".\Objects\I2C.obj",
+".\Objects\P8563.obj",
+".\Objects\oled.obj",
+".\Objects\Conf_tny.obj",
+"..\TINY\RTX51TNY.LIB" 
+TO ".\Objects\temp_show" 
+Rtx51Tiny 
+PRINT(".\Listings\temp_show.map") DISABLEWARNING (15) 
+REMOVEUNUSED 
